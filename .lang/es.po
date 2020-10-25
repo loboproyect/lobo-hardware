@@ -1,0 +1,515 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: CPU-Info 3.15.90\n"
+"PO-Revision-Date: 2020-10-25 16:33 UTC\n"
+"Last-Translator: herberth <herberth@herberth-inspiron1501>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1 FAbout.form:50
+msgid "CPU-Info"
+msgstr ""
+
+#: .project:2 FAbout.form:151
+msgid "CPU-Info is an application that gathers information for hardware components available on your system."
+msgstr "CPU-Info es una aplicación que recopila información sobre los componentes de hardware disponibles en su sistema."
+
+#: FAbout.class:45
+msgid "Version App"
+msgstr "Versión"
+
+#: FAbout.class:46
+msgid "Developed"
+msgstr "Desarrollado"
+
+#: FAbout.class:47
+msgid "Version Gambas"
+msgstr "Versión de Gambas"
+
+#: FAbout.class:48
+msgid "Component"
+msgstr "Componente"
+
+#: FAbout.class:49
+msgid "Build"
+msgstr "Compilación"
+
+#: FAbout.class:50 MCtl.module:952
+msgid "Language"
+msgstr "Idioma"
+
+#: FAbout.class:51 MCtl.module:985
+msgid "Theme"
+msgstr "Apariencia"
+
+#: FAbout.class:118
+msgid "Name"
+msgstr "Nombre"
+
+#: FAbout.class:119
+msgid "Country"
+msgstr "Pais"
+
+#: FAbout.class:120
+msgid "Email"
+msgstr "Correo"
+
+#: FAbout.class:121 MCtl.module:510
+msgid "Type"
+msgstr "Tipo"
+
+#: FAbout.class:134
+msgid "Main Developer and Project Management"
+msgstr "Desarrollador Principal y Gestor del Proyectos"
+
+#: FAbout.class:137
+msgid "France"
+msgstr "Francia"
+
+#: FAbout.class:140
+msgid "Main Developer Gambas Basic"
+msgstr "Desarrollador Principal Gambas Basic"
+
+#: FAbout.class:147 MCtl.module:510
+msgid "Class"
+msgstr "Clase"
+
+#: FAbout.class:154
+msgid "Initial Design Improvements"
+msgstr "Mejoras de Diseño Inicial"
+
+#: FAbout.class:160
+msgid "Form Authenticate"
+msgstr "Formulario de Autenticación"
+
+#: FAbout.class:163
+msgid "Spain"
+msgstr "España"
+
+#: FAbout.class:165
+msgid "Design Update"
+msgstr "Diseño de actualización"
+
+#: FAbout.class:168
+msgid "Polonia"
+msgstr "Polonia"
+
+#: FAbout.class:170
+msgid "I-Nex"
+msgstr ""
+
+#: FAbout.class:177
+msgid "Version "
+msgstr "Versión "
+
+#: FAbout.class:178
+msgid "CPU-Info "
+msgstr ""
+
+#: FAbout.class:258
+msgid "Checking version"
+msgstr "Comprobando versión"
+
+#: FAbout.class:270
+msgid "No updates"
+msgstr "No hay actualizaciones"
+
+#: FAbout.class:276 FAuthenticate.form:118
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: FAbout.class:276
+msgid "Ok"
+msgstr "Aceptar"
+
+#: FAbout.class:276
+msgid "There is a new version, do you want to update?"
+msgstr "Hay una nueva versión, ¿quieres actualizar?"
+
+#: FAbout.class:279
+msgid "Download Canceled"
+msgstr "Descarga Cancelada"
+
+#: FAbout.class:288
+msgid "Downloading new version"
+msgstr "Descargando nueva versión"
+
+#: FAbout.form:40
+msgid "About CPU-Info"
+msgstr "Acerca de CPU-Info"
+
+#: FAbout.form:77
+msgid "Home"
+msgstr "Home"
+
+#: FAbout.form:89
+msgid "License"
+msgstr "Licencia"
+
+#: FAbout.form:101
+msgid "Update"
+msgstr "Actualizar"
+
+#: FAbout.form:113
+msgid "Thanks"
+msgstr "Gracias"
+
+#: FAbout.form:142
+msgid "Copyright © 2020-2020"
+msgstr "Derechos de Autor © 2020-2020"
+
+#: FAbout.form:168
+msgid "    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr "Este programa es software libre: puede redistribuirlo y / o modificarlo según los términos de la Licencia Pública General GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior.  n  n Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; incluso sin la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia pública general GNU para obtener más detalles.  N  n Debería haber recibido una copia de la Licencia pública general GNU junto con este programa. De lo contrario, consulte <http://www.gnu.org/licenses/>."
+
+#: FAbout.form:184
+msgid "Check Update"
+msgstr "Ver actualizaciones"
+
+#: FAbout.form:199
+msgid "Website"
+msgstr "Sitio Web"
+
+#: FAbout.form:206
+msgid "Mail"
+msgstr "Correo"
+
+#: FAbout.form:278 FCheck.form:102 FSystem.form:62 FSystemBasic.form:63
+msgid "Close"
+msgstr "Cerrar"
+
+#: FAuthenticate.class:51
+msgid "Authentication is required to run this program\n'"
+msgstr "Se requiere autenticación para ejecutar este programa\n'"
+
+#: FAuthenticate.class:77
+msgid "root"
+msgstr "Raiz"
+
+#: FAuthenticate.class:128
+msgid "Caps Lock is ON"
+msgstr "Bloqueo de mayúsculas está activado"
+
+#: FAuthenticate.form:29
+msgid "Authenticate"
+msgstr "Autenticar"
+
+#: FAuthenticate.form:68
+msgid "An application is attempting to perform an action that requires privileges.\nAuthentication is required to run this action."
+msgstr "Una aplicación está intentando realizar una acción que requiere privilegios.\nSe requiere autenticación para ejecutar esta acción."
+
+#: FAuthenticate.form:78
+msgid "Password:  "
+msgstr "Contraseña:  "
+
+#: FAuthenticate.form:101
+msgid "Your authentication attempt was unsuccessful. Please try again."
+msgstr "Su intento de autenticación no tuvo éxito. Inténtalo de nuevo."
+
+#: FCheck.class:54
+msgid "Libreria"
+msgstr "Librery"
+
+#: FCheck.class:55 MCtl.module:1018
+msgid "Version"
+msgstr "Versión"
+
+#: FCheck.class:56
+msgid "Installed"
+msgstr "Instalado"
+
+#: FCheck.class:57
+msgid "Path"
+msgstr "Ruta"
+
+#: FCheck.class:128
+msgid "All dependencies are installed, there is nothing to install..."
+msgstr "Todas las dependencias estan instaladas, no hay nada que instalar..."
+
+#: FCheck.form:21
+msgid "Installing dependencies"
+msgstr "Instalando dependencia"
+
+#: FCheck.form:48
+msgid "Dependencies"
+msgstr "Dependencias"
+
+#: FCheck.form:87
+msgid "Install"
+msgstr "Instalar"
+
+#: FCheck.form:101
+msgid "Close Windows"
+msgstr "Cerrar Ventana"
+
+#: FSystem.form:22 FSystemBasic.form:23
+msgid "Main"
+msgstr ""
+
+#: FSystem.form:26 FSystemBasic.form:27
+msgid "Themes"
+msgstr ""
+
+#: FSystem.form:30 FSystemBasic.form:31
+msgid "White"
+msgstr "Blanco"
+
+#: FSystem.form:34 FSystemBasic.form:35
+msgid "Dark"
+msgstr "Oscuro"
+
+#: FSystem.form:38 FSystemBasic.form:39
+msgid "Kids"
+msgstr ""
+
+#: FSystem.form:43 FSystemBasic.form:44
+msgid "Style"
+msgstr "Estilo"
+
+#: FSystem.form:46 FSystemBasic.form:47
+msgid "Full"
+msgstr "Completo"
+
+#: FSystem.form:50 FSystemBasic.form:51
+msgid "Basic"
+msgstr "Básico"
+
+#: FSystem.form:55 FSystemBasic.form:56
+msgid "About"
+msgstr "Acerca de"
+
+#: FSystemBasic.class:143 MCtl.module:211
+msgid "Device"
+msgstr "Dispositivo"
+
+#: FSystemBasic.class:143 MCtl.module:267
+msgid "Distribution"
+msgstr "Distribución"
+
+#: FSystemBasic.class:143 MCtl.module:214
+msgid "Hard Disk"
+msgstr "Disco Duro"
+
+#: FSystemBasic.class:143 MCtl.module:267
+msgid "Kernel"
+msgstr "Núcleo"
+
+#: FSystemBasic.class:143 MCtl.module:213
+msgid "Memory"
+msgstr "Memoria"
+
+#: FSystemBasic.class:143 MCtl.module:267
+msgid "OS"
+msgstr "Sistema Operativo"
+
+#: FSystemBasic.class:143 MCtl.module:212
+msgid "Processor"
+msgstr "Procesador"
+
+#: MCtl.module:210
+msgid "Overview"
+msgstr "Visión General"
+
+#: MCtl.module:215
+msgid "System"
+msgstr "Sistema"
+
+#: MCtl.module:216
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: MCtl.module:217
+msgid "Motherboard"
+msgstr "Tarjeta Madre"
+
+#: MCtl.module:218
+msgid "Graphics"
+msgstr "Tarjeta Gráfica"
+
+#: MCtl.module:267
+msgid "Graphic"
+msgstr "Tarjeta Gráfica"
+
+#: MCtl.module:267
+msgid "Monitor"
+msgstr "Monitor"
+
+#: MCtl.module:267
+msgid "Network"
+msgstr "Red"
+
+#: MCtl.module:267
+msgid "Sound"
+msgstr "Sonido"
+
+#: MCtl.module:267
+msgid "Wifi"
+msgstr "Red Inalambrica"
+
+#: MCtl.module:333
+msgid "Architecture"
+msgstr "Arquitectura"
+
+#: MCtl.module:333
+msgid "CPUs"
+msgstr "CPUs"
+
+#: MCtl.module:333
+msgid "Cache"
+msgstr "Caché"
+
+#: MCtl.module:333
+msgid "Family"
+msgstr "Familia"
+
+#: MCtl.module:333
+msgid "Generation"
+msgstr "Generación"
+
+#: MCtl.module:333
+msgid "Vendor"
+msgstr "Vendedor"
+
+#: MCtl.module:366
+msgid "Free"
+msgstr "Libre"
+
+#: MCtl.module:366
+msgid "Total"
+msgstr "Total"
+
+#: MCtl.module:366
+msgid "Used"
+msgstr "Utilizado"
+
+#: MCtl.module:510
+msgid "Logical Name"
+msgstr "Nombre Lógico"
+
+#: MCtl.module:510
+msgid "Model"
+msgstr "Modelo"
+
+#: MCtl.module:510
+msgid "Size"
+msgstr "Tamaño"
+
+#: MCtl.module:510
+msgid "Speed"
+msgstr "Velocidad"
+
+#: MCtl.module:540
+msgid "Disk Drive: "
+msgstr "Disco Duro: "
+
+#: MCtl.module:609
+msgid "Partition"
+msgstr "Partición"
+
+#: MCtl.module:614
+msgid "% Used"
+msgstr "% Utilizado"
+
+#: MCtl.module:615
+msgid "Mount"
+msgstr "Montar"
+
+#: MCtl.module:704
+msgid "Can't from read the source file or disk..."
+msgstr "No se puede leer el archivo o el disco de origen..."
+
+#: MCtl.module:888
+msgid "sLabel"
+msgstr ""
+
+#: MCtl.module:952
+msgid "Display Manager"
+msgstr "Gestor de pantalla"
+
+#: MCtl.module:952
+msgid "GLX"
+msgstr "GLX"
+
+#: MCtl.module:952
+msgid "Mesa"
+msgstr "Mesa"
+
+#: MCtl.module:952
+msgid "OpenGL"
+msgstr "OpenGL"
+
+#: MCtl.module:952
+msgid "Shell"
+msgstr "Shell"
+
+#: MCtl.module:952
+msgid "Time Zone"
+msgstr "Zona Horaria"
+
+#: MCtl.module:952
+msgid "Windows Manager"
+msgstr "Administrador de Ventanas"
+
+#: MCtl.module:952
+msgid "X.Org"
+msgstr "X.Org"
+
+#: MCtl.module:968
+msgid "Kernel "
+msgstr "Núcleo"
+
+#: MCtl.module:985
+msgid "Group"
+msgstr "Grupo"
+
+#: MCtl.module:985
+msgid "Host"
+msgstr "Anfitrión"
+
+#: MCtl.module:985
+msgid "User"
+msgstr "Usuario"
+
+#: MCtl.module:1018
+msgid "Bios"
+msgstr "Bios"
+
+#: MCtl.module:1018
+msgid "Chipset"
+msgstr "Chipset"
+
+#: MCtl.module:1051
+msgid "Driver"
+msgstr "Controlador"
+
+#: MCtl.module:1051
+msgid "Product"
+msgstr "Producto"
+
+#: MCtl.module:1051
+msgid "Renderer"
+msgstr "Renderizador"
+
+#: MCtl.module:1051
+msgid "Resolution"
+msgstr "Resolución"
+
+#: MInfo.module:456
+msgid "&1 K"
+msgstr ""
+
+#: MInfo.module:458
+msgid "&1 M"
+msgstr ""
+
+#: MInfo.module:460
+msgid "&1 G"
+msgstr ""
+
+#: MInfo.module:462
+msgid "&1 T"
+msgstr ""
+

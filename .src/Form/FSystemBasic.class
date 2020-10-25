@@ -1,0 +1,245 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+Const ICON As Integer = 22
+$MX As Integer
+$MY As Integer
+$hLabel As Label
+$hPicture As PictureBox
+W As Integer = 400 'MCtl.W
+H As Integer = 400 'MCtl.H
+$hPnlContainer As Panel
+
+$hPanelSpc As Panel
+FONT_COLOR As Integer = &002c3e50
+$iView As IconView
+Settings_Theme As New Settings(Desktop.ConfigDir &/ "CPU-Info" &/ "CPU-Info.conf")
+
+Public Sub CheckModelProces()
+  
+  ''Check processor
+  
+  Dim s As String = MInfo.sPro
+  
+  ''Verify that a string contains a "Processor Type" pattern
+  
+  If s Like "*Intel*" Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/intel.png"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "INTEL"
+    
+  Else If s Like "*AMD*" Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/amd.png"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "AMD"
+    
+  Else If Not (InStr(s, "Intel")) Or Not (InStr(s, "AMD")) Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/cpu.svg"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "Generic"
+  Endif
+  
+End
+
+Public Sub Init_Form_Sys()
+  
+  ''Create panel space
+  $hPanelSpc = New Panel(Me) As "pn1"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 2
+  End With
+  
+  ''Create panel container ctl
+  
+  $hPnlContainer = New Panel(Me) As "pnCount"
+  With $hPnlContainer
+    .Arrangement = Arrange.Horizontal
+    .H = 56
+  End With
+  
+  ''Create panel space
+  $hPanelSpc = New Panel($hPnlContainer) As "pn1"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
+  ''Create picture logo processor
+  $hPicture = New PictureBox($hPnlContainer) As "hPicLogo"
+  With $hPicture
+    .w = 56
+    .Stretch = True
+    .Picture = Picture["img/cpu.svg"]
+  End With
+  
+  ''Create panel space logo/title
+  $hPanelSpc = New Panel($hPnlContainer) As "pn1"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
+  ''Create text proce
+  $hLabel = New Label($hPnlContainer) As "hLabelProce"
+  With $hLabel
+    .h = 56
+    .Alignment = Align.Center
+    .Border = Border.None
+    .Font.Bold = True
+    .Font.Size = 16
+    .Foreground = FONT_COLOR
+    .Padding = 3
+    .AutoResize = True
+    .Text = "INTEL & AMD"
+  End With
+  
+  ''Create iconview list
+  $iView = New IconView(Me) As "$iView"
+  With $iView
+    .Orientation = Arrange.Horizontal
+    .Foreground = FONT_COLOR
+    .Background = Color.Transparent
+    .Font.Size = 9
+    .Font.bold = True
+    .Border = False
+    .Mouse = Mouse.Pointing
+    .Expand = True
+  End With
+  
+End
+
+Public Sub FillListInfo()
+  
+  ''Fill menu list
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Device"): "device", ("Processor"): "processor", ("Memory"): "ram", ("Hard Disk"): "hd", ("OS"): "os", ("Kernel"): "kernel", ("Distribution"): "distribution"]
+  Dim cSyst As String[] = [("Device"), ("Processor"), ("Memory"), ("Hard Disk"), ("OS"), ("Kernel"), ("Distribution")]
+  Dim cSysInfo As String[]
+  
+  $iView.Clear
+  cSysInfo = [(MInfo.sMachine), (MInfo.sPro), (MInfo.sRam), (MInfo.sSizeHD), (MInfo.sOS & Space(2) & System.Architecture), (MInfo.sKernel), MInfo.GetDistribution()]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub _new()
+  
+  Init_Form_Sys
+  
+  MInfo.GetListOverview
+  MInfo.GetInfoMemory
+  MInfo.GetListStore
+  CheckModelProces
+  
+  FillListInfo
+  
+End
+
+Public Sub Form_Open()
+  
+  Application.Animations = True
+  With FSystemBasic
+    .w = W
+    .H = H
+    .Text = Application.Name
+    .Foreground = FONT_COLOR
+    ' .Background = BACKGROUND_COLOR
+    .Arrangement = Arrange.Vertical
+    .Border = False
+    .Padding = 5
+    .Spacing = True
+    .Move(0, 0)
+    .Show
+    .Sticky = True
+    .Stacking = Window.Normal
+    .TakeFocus = True
+    .Mask = True
+    .Picture = Picture["img/Theme/Basic.png"]
+    .Transparent = True
+    
+  End With
+  
+End
+
+Public Sub mnuAbout_Click()
+  
+  FAbout.ShowModal
+  
+End
+
+Public Sub $iView_MouseDown()
+  
+  ''Positions mouse form
+  $MX = Mouse.ScreenX - Me.X
+  $MY = Mouse.ScreenY - Me.Y
+  
+End
+
+Public Sub $iView_MouseMove()
+  
+  ''Mouse move form
+  If Mouse.Left Then Me.Move(Mouse.ScreenX - $MX, Mouse.ScreenY - $MY)
+  
+End
+
+Public Sub mnuFull_Click()
+  
+  Settings_Theme.Write(FSystem)
+  Settings_Theme["Theme/iFull"] = "1"
+  Settings_Theme.Save
+  Settings_Theme.Reload
+  Me.Close
+  MCtl.Init_Form_Sys
+  MCtl.FillList
+  FSystem.Show
+  
+End
+
+Public Sub mnuBasic_Click()
+  
+  Settings_Theme.Write(FSystem)
+  Settings_Theme["Theme/iFull"] = "0"
+  Settings_Theme.Save
+  
+End
+
+Public Sub mnClose_Click()
+  
+  Me.Close
+  
+End

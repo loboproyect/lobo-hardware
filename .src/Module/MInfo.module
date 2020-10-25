@@ -1,0 +1,465 @@
+' Gambas module file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+' This code is inspired in the aplication i-next and part of the code belongs to Michał Głowienka
+
+''OS
+sProFam As String
+sOS As String
+sKernel As String
+
+''RAM
+
+sRam As String
+sRamTotal As String
+sRamUsed As String
+sRamFree As String
+iRamTotal As Integer
+iRamUsed As Integer
+iRamFree As Integer
+sTotalP As String
+sUsedP As String
+sFreeP As String
+
+''CPU
+
+sPro As String
+sVendor As String
+sFamily As String
+sCores As String
+sGeneration As String
+sSocket As String
+sBrand As String
+sModelBrand As String
+sCache As String
+sMachine As String
+sBoardVendor As String
+sVGA As String
+sNetwork As String
+sEthernet As String
+sAudio As String
+sArchProce As String
+sCacheProce As String
+sMonitor As String
+
+''HD
+
+$sInfoHD As String[] = []
+sListHD As String
+sSizeHD As String
+iSizeHD As Integer
+sUsedHDP As String
+sFreeHDP As String
+sTotalHDP As String
+iUsedHDP As Integer
+iFreeHDP As Integer
+iTotalHDP As Integer
+sUsedHD As String
+sVendorHD As String
+sModelHD As String
+sLogicalNameHD As String
+sClassHD As String
+sSpeedHD As String
+sTypeHDSDx As String
+sPartitionHDSDx As String
+sSizeHDSDx As String
+sUsedHDSDx As String
+sFreeHDSDx As String
+sUseHDSDx As String
+sMountHDSDx As String
+sToolUsed As String
+sToolFree As String
+sPartitionHD As String
+sSDx As String
+sUtilHD As String
+sFreeHD As String
+sPorcHD As String
+
+''OS
+
+sRelease As String
+bDefault_D_M As Boolean = Exist("/etc/X11/default-display-manager")
+sDDM As String
+sWM As String
+sTimeZone As String
+sXVersion As String
+sGLXVersion As String
+sOpenGLVersion As String
+sMesaVersion As String
+sPackages As String
+
+''MOTHER
+
+sVendorMother As String
+sNameMother As String
+sVersionMother As String
+sVendorBios As String
+sVersionBios As String
+sVendorChassis As String
+sVendorVGA As String
+sProductVGA As String
+sVensionVGA As String
+sRendererVGA As String
+sDriverVGA As String
+sResolutionVGA As String
+
+''CONTROLS
+
+hPicture As PictureBox
+$LstView As ColumnView
+hCmbBoxSDx As ComboBox
+$hGView As GridView
+sHSplit As Panel
+sLabel As Label
+hCirG As CircleGauge
+
+Public Sub GetListOverview()
+  
+  ''Show list Overview
+  
+  Shell "cat /sys/devices/virtual/dmi/id/product_name" To sMachine
+  ' Shell "cat /proc/cpuinfo | grep -i ghz | uniq | cut -f2 -d" & ":" To sPro
+  Shell "cat /proc/cpuinfo | grep -i model | head -2 | cut -d: -f2 | sed -n '2p'" To sPro
+  
+  Shell "cat /proc/cpuinfo | grep -i family | uniq | cut -f2 -d" & ":" To sProFam
+  Shell "cat /sys/devices/virtual/dmi/id/board_vendor" To sVendorMother
+  Shell "lspci | grep -i 'VGA' | cut -d ':' -f3 | cut -d '(' -f 1 | sed -n '1p'" To sVGA
+  Shell "/usr/sbin/hwinfo --short | grep Monitor" To sMonitor
+  Shell "lspci | grep -i 'Ethernet' | cut -d ':' -f3 | cut -d '(' -f 1 | sed -n '1p'" To sEthernet
+  ''Shell "lspci | grep -i wireless  | cut -d ':' -f3" To sNetwork
+  Shell "lspci | grep -i 'Network controller' | cut -d ':' -f3" To sNetwork
+  
+  Shell "lspci | grep -i 'Audio' | cut -d ':' -f3 | cut -d '(' -f 1 | sed -n '1p'" To sAudio
+  Shell "uname -r" To sKernel
+  Shell "uname -o" To sOS
+  
+End
+
+Public Sub GetListDevice()
+  
+  ''Show list Device
+  
+  Shell "cat /sys/devices/virtual/dmi/id/product_name" To sMachine
+  ''Shell "cat /proc/cpuinfo | grep -i ghz | uniq | cut -f2 -d" & ":" To sPro
+  Shell "cat /proc/cpuinfo | grep -i model | head -2 | cut -d: -f2 | sed -n '2p'" To sPro
+  
+  Shell "cat /proc/cpuinfo | grep -i family | uniq | cut -f2 -d" & ":" To sProFam
+  Shell "uname -r" To sKernel
+  Shell "uname -o" To sOS
+  
+End
+
+Public Sub GetListProcessor()
+  
+  ''Show list Processor
+  
+  Shell "cat /proc/cpuinfo | grep -i vendor_id | uniq | cut -f2 -d" & ":" To sVendor
+  '' Shell "cat /proc/cpuinfo | grep -i ghz | uniq | cut -f2 -d" & ":" To sPro
+  Shell "cat /proc/cpuinfo | grep -i model | head -2 | cut -d: -f2 | sed -n '2p'" To sPro
+  
+  Shell "cat /proc/cpuinfo | grep processor | wc -l" To sCores
+  
+  Shell "/usr/sbin/hwinfo --cpu | grep Cache: | head -1 | cut -d: -f2" To sCacheProce
+  sCacheProce = Replace(sCacheProce, "kb", "")
+  sCacheProce = Trim(sCacheProce)
+  sCacheProce = GetSizeRam(CLong(sCacheProce), 0)
+  
+  Shell "cat /proc/cpuinfo | grep -i family | uniq | cut -f2 -d" & ":" To sFamily
+  Shell "/usr/sbin/hwinfo --cpu | grep Arch: | head -1 | cut -d: -f2" To sArchProce
+  Shell "cat /proc/cpuinfo | grep stepping |  head -1 | cut -d: -f2" To sGeneration
+  
+End
+
+Public Sub GetListMemory()
+  
+  ''Show list Memory
+  
+  Shell "free -m  | grep 'Mem' | awk {'print $2'}" Wait To sRamTotal
+  Shell "free -m  | grep 'Mem' | awk {'print $3'}" Wait To sRamUsed
+  
+  sRamFree = Val(sRamTotal) - Val(sRamUsed)
+  sRamTotal = Trim(sRamTotal)
+  sRamFree = Trim(sRamFree)
+  sRamUsed = Trim(sRamUsed)
+  
+  iRamTotal = Val(sRamTotal)
+  iRamUsed = Val(sRamUsed)
+  iRamFree = Val(sRamFree)
+  
+End
+
+Function CalculateLOGICAL(BlockSize As Float) As String '' CODE I-NEXT
+  
+  ''Function code GB-MB-Kib-Byte
+  
+  Dim LOGICAL_SIZE0 As Float
+  Dim LOGICAL_SIZE1 As Long
+  Dim LOGICAL_SIZE2 As Float
+  Dim LOGICAL_SIZE3 As Float
+  Dim iPos As Integer
+  
+  LOGICAL_SIZE0 = (BlockSize * 512 / 1000 / 1000 / 1000)
+  LOGICAL_SIZE1 = (BlockSize * 512 / 1000 / 1000)
+  LOGICAL_SIZE2 = (BlockSize * 512 / 1000)
+  LOGICAL_SIZE3 = (BlockSize * 512)
+  If CLong(LOGICAL_SIZE0) > 0 Then
+    iPos = InStr(CString(LOGICAL_SIZE0), ".")
+    Return Left$(CString(LOGICAL_SIZE0), iPos + 1) & Space$(1) & "GB"
+  Else If LOGICAL_SIZE1 > 0 Then
+    iPos = InStr(CString(LOGICAL_SIZE1), ".")
+    Return Left$(CString(LOGICAL_SIZE1), iPos + 1) & Space$(1) & "MB"
+  Else If CLong(LOGICAL_SIZE2) > 0 Then
+    iPos = InStr(CString(LOGICAL_SIZE2), ".")
+    Return Left$(CString(LOGICAL_SIZE2), iPos + 1) & Space$(1) & "KiB"
+  Else If CLong(LOGICAL_SIZE3) > 0 Then
+    iPos = InStr(CString(LOGICAL_SIZE3), ".")
+    Return Left$(CString(LOGICAL_SIZE3), iPos + 1) & Space$(1) & "Bytes"
+  Else
+    Return 0
+  Endif
+  
+End
+
+Public Sub GetListHD()
+  
+  ''Show list sda
+  
+  Dim iHD As Integer
+  
+  $sInfoHD.Clear
+  
+  For iHD = 1 To Dir("/sys/block/", "sda").Count
+    $sInfoHD.Add(Dir("/sys/block/", "sda")[iHD - 1])
+  Next
+  
+Catch
+  Debug "ERROR [ " & DConv(Error.Text) & " ]"
+  
+End
+
+Public Sub GetListStore()
+  
+  ''Show list Store
+  
+  Dim sListHDTmp As String
+  
+  GetListHD
+  
+  For Each sListHDTmp In $sInfoHD
+    If (InStr(sListHDTmp, "sda")) Then
+      
+      Shell "cat /sys/block/" & sListHDTmp & "/size" Wait To sSizeHD
+      
+      iSizeHD = Val(sSizeHD)
+      sSizeHD = CalculateLOGICAL(iSizeHD)
+      
+      Shell "cat /sys/block/" & sListHDTmp & "/device/model  | awk {'print $1'}" To sVendorHD
+      Shell "cat /sys/block/" & sListHDTmp & "/device/model  | awk {'print $2'}" To sModelHD
+      Shell "cat /sys/block/" & sListHDTmp & "/device/vendor" To sClassHD
+      Shell "cat /sys/class/ata_link/link1/sata_spd" To sSpeedHD
+      Shell "lsscsi  | awk {'print $7'} | sed -n '1p'" To sLogicalNameHD
+      
+    Endif
+  Next
+  'Catch
+  ' Debug "ERROR [ " & DConv(Error.Text) & " ]"
+  
+End
+
+Public Sub GetListOS()
+  
+  ''Show list OS
+  
+  Shell "uname -o" To sOS
+  Shell "uname -r" To sKernel
+  Shell "lsb_release -r | cut -f2 " To sRelease
+  Shell "wmctrl -m | grep -i Name: | cut -d ':' -f2" To sWM
+  Shell "cat /etc/timezone" To sTimeZone
+  
+  If sTimeZone = Null Or "" Then
+    Shell "timedatectl status | grep 'Time zone:' | awk '{print $3}'" To sTimeZone
+  Endif
+  
+  Shell "cat /var/log/Xorg.0.log | grep \"X.Org X Server\" | awk {'print $4'}" To sXVersion
+  Shell "glxinfo -B | grep -i 'Version' | head -1 | cut -d: -f2" To sGLXVersion
+  Shell "glxinfo | awk '/OpenGL version/ {print $4}'" To sOpenGLVersion
+  Shell "glxinfo | awk '/OpenGL version/ {print $6}'" To sMesaVersion
+  
+  If bdefault_D_M = True Then
+    Shell "cat /etc/X11/default-display-manager" To sDDM
+  Endif
+  
+End
+
+Public Sub GetListMother()
+  
+  ''Show list Mother
+  
+  Shell "cat /sys/devices/virtual/dmi/id/board_vendor" To sVendorMother
+  Shell "cat /sys/devices/virtual/dmi/id/board_name" To sNameMother
+  Shell "cat /sys/devices/virtual/dmi/id/board_version" To sVersionMother
+  Shell "cat /sys/devices/virtual/dmi/id/bios_vendor" To sVendorBios
+  Shell "cat /sys/devices/virtual/dmi/id/bios_version" To sVersionBios
+  Shell "cat /sys/devices/virtual/dmi/id/chassis_vendor" To sVendorChassis
+  
+End
+
+Public Sub GetListGraphic()
+  
+  ''Show list Graphic
+  Shell "lspci | grep -i 'VGA' | cut -d ':' -f3 | cut -d '(' -f 1 | sed -n '1p'" To sVGA
+  Shell "lshw -C display | grep -i 'product' | head -1 | cut -d: -f2" To sProductVGA
+  
+  Shell "glxinfo | grep 'OpenGL vendor' | head -1 | cut -d: -f2" To sVendorVGA
+  Shell "glxinfo | grep 'OpenGL renderer' | head -1 | cut -d: -f2" To sRendererVGA
+  'Shell "lshw -C display | grep -i 'vendor' | head -1 | cut -d: -f2" To sVendorVGA
+  'Shell "lshw -C display | grep -i 'version' | head -1 | cut -d: -f2" To sVensionVGA
+  
+  Shell "xdriinfo | cut -d: -f2" To sDriverVGA
+  Shell "xdpyinfo | grep 'dimensions:' | awk {'print $2'}" To sResolutionVGA
+  
+End
+
+Public Sub ReadLsbRelease(sPath As String) As Collection ''CODE GAMBAS
+  
+  ''Show lsb
+  
+  Dim cCol As New Collection
+  Dim sLine As String
+  Dim aLine As String[]
+  
+  For Each sLine In Split(File.Load(sPath), "\n", "", True)
+    
+    aLine = Scan(sLine, "*=*")
+    Try cCol[aLine[0]] = UnQuote(aLine[1])
+    
+  Next
+  
+  Return cCol
+  
+End
+
+Public Sub GetDistribution() As String ''CODE GAMBAS
+  
+  ''Show distro
+  
+  Dim cDist As Collection = ["lsb-release": "/etc/lsb-release", "vector": "/etc/vector-version", "slackware": "/etc/slackware-version", "debian": "/etc/debian_version",
+    "redhat": "/etc/redhat-release", "arch": "/etc/arch-release", "SuSE": "/etc/os-release", "gentoo": "/etc/gentoo-release", "conectiva": "/etc/conectiva-release",
+    "mandriva": "/etc/mandriva-release", "pardus": "/etc/pardus-release", "kanotix": "/etc/kanotix-release"]
+  
+  Dim sPath As String
+  Dim sDistro As String
+  Dim cData As Collection
+  Dim iPos As Integer
+  
+  For Each sPath In cDist
+    sDistro = cDist.Key
+    
+    If Not Exist(sPath) Then Continue
+    
+    If sDistro = "lsb-release" Then
+      cData = ReadLsbRelease(sPath)
+      sDistro = cData["DISTRIB_DESCRIPTION"]
+      If sDistro Then Return sDistro
+      Return cData["DISTRIB_ID"] & " " & cData["DISTRIB_RELEASE"]
+    Else
+      Return sDistro & " " & Trim(File.Load(sPath))
+    Endif
+    
+  Next
+  
+  If Exist("/etc/issue") Then
+    sDistro = File.Load("/etc/issue")
+    If sDistro Then
+      iPos = InStr(sDistro, "\\")
+      If iPos Then sDistro = Left(sDistro, iPos - 1)
+    Endif
+  Else
+    Exec ["uname", "-s"] To sDistro
+  Endif
+  Return Trim(sDistro)
+  
+End
+
+Public Sub GetInfoMemory()
+  
+  ''Show list memory
+  
+  Exec ["cat", "/proc/meminfo"] To sRam
+  Shell "free -m | grep 'Mem' | awk {'print $2'}" Wait To sRamTotal
+  Shell "free -m | grep 'Mem' | awk {'print $3'}" Wait To sRamUsed
+  
+  sRamTotal = Trim(sRamTotal)
+  sRamUsed = Trim(sRamUsed)
+  sRamFree = Val(sRamTotal) - Val(sRamUsed)
+  sRamFree = Trim(sRamFree)
+  
+  sTotalP = Trim(sRamTotal)
+  sUsedP = Trim(sRamUsed)
+  sFreeP = Val(sRamTotal) - Val(sRamUsed)
+  sFreeP = Trim(sRamFree)
+  
+  Try sRam = Scan(sRam, "*MemTotal:*\n*")[1]
+  
+  If Error Then
+    sRam = ""
+  Else
+    While Not IsDigit(Right(sRam))
+      sRam = Left(sRam, -1)
+      
+    Wend
+    sRam = Trim(sRam)
+    
+  Endif
+  
+  If sRam Then
+    
+    sRam = GetSizeRam(sRam, 0)
+    
+  Endif
+  
+End
+
+Public Sub GetSizeRam(iSize As Long, Optional nDigit As Integer = 1) As String '' CODE GAMBAS
+  
+  ''Format code ram
+  
+  Dim sFormat As String
+  
+  sFormat = "0." & String$(nDigit, "#")
+  
+  If iSize < 1024 Then
+    Return Subst(("&1 K"), CStr(iSize))
+  Else If iSize < 1048576 Then
+    Return Subst(("&1 M"), Format(iSize / 1024, sFormat))
+  Else If iSize < 1073741824 Then
+    Return Subst(("&1 G"), Format(iSize / 1048576, sFormat))
+  Else
+    Return Subst(("&1 T"), Format(iSize / 1073741824, sFormat))
+  Endif
+  
+End

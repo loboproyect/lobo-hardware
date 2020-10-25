@@ -1,0 +1,188 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+' This code belongs to Charlie Ogier 
+
+Export
+Inherits UserControl
+
+Property Max As Float
+Property Min As Float
+Property Value As Float
+Property PreviousValue As Float
+Property Unit As String
+Property Label As Boolean
+Property Animated As Boolean
+Property Color As Integer
+Property LabelColor As Integer
+
+Private $fMax As Float
+Private $fMin As Float
+Private $fValue As Float
+Private $fPreviousValue As Float
+Private $sUnit As String
+Private $bLabel As Boolean
+Private $bAnimated As Boolean
+Private $iColor As Integer
+Private $iLabelColor As Integer
+
+Public hContainer As New Panel(Me)
+
+Public Sub _new()
+  
+  With hContainer
+    .Expand = True
+    .Arrangement = Arrange.Vertical
+  End With
+  
+  With Me
+    .Unit = " %"
+    .Label = True
+    .Animated = False
+  End With
+  
+End
+
+Private Function Max_Read() As Float
+  
+  Return $fMax
+  
+End
+
+Private Sub Max_Write(Value As Float)
+  
+  If Value <= Me.Min Then
+    $fMax = Me.Min + 1
+  Else
+    $fMax = Value
+  Endif
+  
+End
+
+Private Function Min_Read() As Float
+  
+  Return $fMin
+  
+End
+
+Private Sub Min_Write(Value As Float)
+  
+  $fMin = Value
+  
+End
+
+Private Function Value_Read() As Float
+  
+  Return $fValue
+  
+End
+
+Private Sub Value_Write(Value As Float)
+  
+  If Value < Me.min Then
+    $fValue = Me.Min
+  Else If Value > Me.Max Then
+    $fValue = Me.Max
+  Else
+    $fValue = Value
+  Endif
+  
+  Me.Children[0].Refresh()
+  
+End
+
+Private Function PreviousValue_Read() As Float
+  
+  Return $fPreviousValue
+  
+End
+
+Private Sub PreviousValue_Write(Value As Float)
+  
+  $fPreviousValue = Value
+  
+End
+
+Private Function Unit_Read() As String
+  
+  Return $sUnit
+  
+End
+
+Private Sub Unit_Write(Value As String)
+  
+  $sUnit = Value
+  
+End
+
+Private Function Label_Read() As Boolean
+  
+  Return $bLabel
+  
+End
+
+Private Sub Label_Write(Value As Boolean)
+  
+  $bLabel = Value
+  
+End
+
+Private Function Animated_Read() As Boolean
+  
+  Return $bAnimated
+  
+End
+
+Private Sub Animated_Write(Value As Boolean)
+  
+  $bAnimated = Value
+  
+End
+
+Private Function Color_Read() As Integer
+  
+  Return $iColor
+  
+End
+
+Private Sub Color_Write(Value As Integer)
+  
+  $iColor = Value
+  
+End
+
+Private Function LabelColor_Read() As Integer
+  
+  Return $iLabelColor
+  
+End
+
+Private Sub LabelColor_Write(Value As Integer)
+  
+  $iLabelColor = Value
+  
+End

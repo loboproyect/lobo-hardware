@@ -1,0 +1,399 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+sList As String
+asListlib As New String[]
+sTextLib As String
+sLib As String
+aDir As String[]
+'URL_App As String = "https://sourceforge.net/projects/cpu-info-linux/files/Version/CPU-Info.gambas"
+Settings_Update As New Settings(Desktop.ConfigDir &/ "CPU-Info" &/ "CPU-Update.conf")
+sPath As String '= Desktop.ConfigDir &/ "CPU-Info" 
+
+Public Sub Init_Grid_System()
+  
+  Dim sText As String
+  Dim aTextSys As String[] = []
+  Dim i As Integer
+  Dim aLine As String[]
+  
+  aTextSys.Add("[CPU-Info]")
+  aTextSys.Add(("Version App") & "=" & Application.Version)
+  aTextSys.Add(("Developed") & "=" & "Gambas Basic")
+  aTextSys.Add(("Version Gambas") & "=" & System.FullVersion)
+  aTextSys.Add(("Component") & "=" & (sTextLib)) 
+  aTextSys.Add(("Build") & "=" & "1410.20") '"20201009")
+  aTextSys.Add(("Language") & "=" & System.Language)
+  aTextSys.Add(("Theme") & "=" & Style.Name)
+  
+  GridSystem.Rows.Count = aTextSys.Count
+  GridSystem.Columns.Count = 3
+  GridSystem.Mode = Select.Single
+  GridSystem.Grid = False
+  GridSystem.Font.Size = 8
+  GridSystem.Background = Color.Transparent
+  GridSystem.Border = False
+  
+  I = 0
+  
+  For Each sText In aTextSys
+    If Left(sText) = "[" Then
+      With GridSystem[I, 0]
+        .Text = Mid$(sText, 2, -1)
+        .Font.Bold = True
+        .Font.Underline = True
+        .ColumnSpan = 3
+        .Padding = 4
+      End With
+    Else If sText Then 
+      aLine = Split(sText, "=")
+      GridSystem[I, 0].Text = Space$(2) & Trim(aLine[0])
+      GridSystem[I, 0].Padding = 4
+      GridSystem[I, 2].Text = Trim(aLine[1])
+      GridSystem[I, 2].Padding = 4 
+      GridSystem.Rows.H = 25
+      
+    Endif
+    Inc I
+  Next
+  
+  GridSystem.Columns[0].Width = -1
+  GridSystem.Columns[1].Width = Desktop.Scale * 2
+  
+End
+
+Public Sub GridSystem_Click()
+  
+  'LibCom
+  'asListlib.Max
+  'If GridSystem.column = 2 And GridSystem.Row = 4 Then
+  '  GridSystem.edit(asListlib, True) 
+  'Endif
+  
+End
+
+Public Sub Init_Grid_Thanks()
+  
+  With GridThanks
+    .Columns.Count = 4
+    .Rows.Height = 20
+    .Background = Color.Transparent
+    .H = 225
+    .Grid = True
+    .Border = True
+    .Mode = Select.Single
+    .ScrollBar = Scroll.None
+    .Tracking = True
+    .Header = GridView.Horizontal
+    .Font.Size = 8
+    .Foreground = Color.White
+    .columns[0].width = 120
+    .Columns[1].width = 75
+    .Columns[2].width = 170
+    .Columns[3].width = 50
+    .Columns[0].Text = ("Name")
+    .Columns[1].Text = ("Country")
+    .Columns[2].Text = ("Email")
+    .Columns[3].Text = ("Type")
+    
+  End With
+  
+  With GridThanks
+    
+    GridThanks.Columns.Count = 4
+    GridThanks.Rows.Count = 7
+    
+    GridThanks[0, 0].Text = "Herberth Guzmán"
+    GridThanks[0, 0].Alignment = Align.Left
+    GridThanks[0, 1].Text = "Guatemala"
+    GridThanks[0, 2].Text = "herberthguzman@gmail.com"
+    GridThanks[0, 3].Text = ("Main Developer and Project Management")
+    GridThanks[1, 0].Text = "Benoit Minisini"
+    GridThanks[1, 0].Alignment = Align.Left
+    GridThanks[1, 1].Text = ("France")
+    GridThanks[1, 2].Text = "g4mba5@gmail.com"
+    GridThanks[1, 2].Alignment = Align.Left
+    GridThanks[1, 3].Text = ("Main Developer Gambas Basic")
+    GridThanks[1, 3].Alignment = Align.Left
+    GridThanks[2, 0].Text = "Jornmo"
+    GridThanks[2, 0].Alignment = Align.Left
+    GridThanks[2, 1].Text = "unknown"
+    GridThanks[2, 2].Text = "Jornmo@gmail.com"
+    GridThanks[2, 2].Alignment = Align.Left
+    GridThanks[2, 3].Text = ("Class") & Space(1) & "Gauge"
+    GridThanks[2, 3].Alignment = Align.Left
+    GridThanks[3, 0].Text = "Catalina Mendez"
+    GridThanks[3, 0].Alignment = Align.Left
+    GridThanks[3, 1].Text = "Guatemala"
+    GridThanks[3, 2].Text = "elibita3@gmail.com"
+    GridThanks[3, 2].Alignment = Align.Left
+    GridThanks[3, 3].Text = ("Initial Design Improvements")
+    GridThanks[3, 3].Alignment = Align.Left
+    GridThanks[4, 0].Text = "Charlie Ogier"
+    GridThanks[4, 0].Alignment = Align.Left
+    GridThanks[4, 1].Text = "Guernsey"
+    GridThanks[4, 2].Text = "bugs@cogier.com"
+    GridThanks[4, 3].Text = ("Form Authenticate")
+    GridThanks[5, 0].Text = "Julio Sánchez"
+    GridThanks[5, 0].Alignment = Align.Left
+    GridThanks[5, 1].Text = ("Spain")
+    GridThanks[5, 2].Text = "jusabejusabe@gmail.com"
+    GridThanks[5, 3].Text = ("Design Update") 
+    GridThanks[6, 0].Text = "Michał Głowienka"
+    GridThanks[6, 0].Alignment = Align.Left
+    GridThanks[6, 1].Text = ("Polonia")
+    GridThanks[6, 2].Text = "eloaders@linux.pl"
+    GridThanks[6, 3].Text = ("I-Nex")
+  End With
+  
+End
+
+Public Sub Form_Open()
+  
+  lblversion.Text = ("Version ") & Application.Version
+  lbltitle.Text = ("CPU-Info ")
+  
+  lbltitle.Foreground = Color.White ' &hDDDDFF
+  lblVersion.Foreground = &hDDDDFF
+  tlblinfo.Foreground = &hDDDDFF
+  pnTitle.Background = Color.Merge(Color.SelectedBackground, &2679db, 0.75) 
+  
+  LibCom
+  Init_Grid_System
+  
+End
+
+Public Sub btnClose_Click()
+  
+  Me.Close
+  
+End
+
+Public Sub Form_KeyPress()
+  
+  If Key.Code = Key.Esc Then
+    Me.Close
+  Endif
+  
+End
+
+Public Sub tlbWallOk_Click()
+  
+  Me.Close
+  
+End
+
+Public Sub BtnPlus1_Click()
+  
+  pnlLicense.Visible = True 
+  pnlhome.Visible = False
+  pnlUpdate.Visible = False
+  pnlthanks.Visible = False
+  
+End
+
+Public Sub BtnPlus2_Click()
+  
+  pnlUpdate.Visible = True
+  pnlLicense.Visible = False 
+  pnlhome.Visible = False
+  pnlthanks.Visible = False
+  
+End
+
+Public Sub BtnPlus0_Click()
+  
+  pnlhome.Visible = True
+  pnlUpdate.Visible = False
+  pnlLicense.Visible = False
+  pnlthanks.Visible = False
+  
+End
+
+Public Sub BtnPlus3_Click()
+  
+  pnlthanks.Visible = True
+  pnlUpdate.Visible = False
+  pnlLicense.Visible = False 
+  pnlhome.Visible = False
+  
+  Init_Grid_Thanks
+  
+End
+
+Public Sub Update()
+  
+  Dim sProgram As String 
+  Dim sVersion As String 
+  Dim sURL As String
+  Dim sUpdateVersion As String
+  Dim sRes As String
+  
+  sPath = Desktop.ConfigDir &/ "CPU-Info" 
+  lblStatus.Visible = True
+  lblStatus.Text = ("Checking version")
+  Shell "wget https://sourceforge.net/projects/cpu-info-linux/files/Update/CPU-Update.conf --directory-prefix=" & sPath & " -q -o /dev/null - &> /dev/null"
+  Wait 2
+  
+  Settings_Update.reload
+  Try sProgram = Settings_Update["Update/Program"]
+  Try sVersion = Settings_Update["Update/Version"]
+  Try sURL = Settings_Update["Update/Url"]
+  
+  If sVersion = Application.Version Then
+    
+    Message.Title = (Application.Name)
+    Message.Info(("No updates"))
+    lblStatus.Text = Null
+    
+  Else
+    
+    If sVersion > Application.Version Then
+      Message.Title = (Application.Name)    
+      sRes = Message.Question(("There is a new version, do you want to update?"), ("Ok"), ("Cancel"))
+      If sRes = 2 Then
+        
+        lblStatus.Text = ("Download Canceled")
+        
+      Else
+        
+        If Not Exist(sPath) Then
+          Mkdir sPath
+          Wait
+        Endif
+        
+        lblStatus.Text = ("Downloading new version")
+        
+        Shell "wget " & sURL & " --directory-prefix=" & sPath & " -q -o /dev/null - &> /dev/null"
+        Wait 2
+        lblStatus.Text = ("Download completed successfully " & sPath)
+        
+        Shell "rm -r " & sPath &/ "*.conf.*"
+        Shell "rm -r " & sPath &/ "*.gambas.*"
+        Wait 1
+        
+        '        lblStatus.Visible = False
+        
+      Endif
+    Endif
+    
+  Endif
+  
+End
+
+Public Sub LibCom()
+  
+  If Component.IsLoaded("gb.qt4") Then
+    aDir = RDir("/usr/lib/", "*libQtCore.so.*.*.*")
+    If aDir.Count = 1 Then sLib &= "QT4=" & aDir[0] & "\n"
+    If sLib Then
+      sTextLib &= sLib & "\n"
+    Endif
+  Endif
+  
+  If Component.IsLoaded("gb.qt5") Then
+    aDir = RDir("/usr/lib/", "*libQt5Core.so.*.*.*")
+    If aDir.Count = 1 Then sLib &= "QT5=" & aDir[0] & "\n"
+    If sLib Then
+      sTextLib &= sLib & "\n"
+    Endif
+  Endif
+  
+  If Component.IsLoaded("gb.gtk") Then
+    aDir = RDir("/usr/lib/", "*libgtk-x11-2*.so.*.*.*")
+    If aDir.Count = 1 Then sLib &= "GTK+2=" & aDir[0] & "\n"
+    If sLib Then
+      sTextLib &= sLib & "\n"
+    Endif
+  Endif
+  
+  If Component.IsLoaded("gb.gtk3") Then
+    aDir = RDir("/usr/lib/", "*libgtk-3*.so.*.*.*")
+    If aDir.Count = 1 Then sLib &= "GTK+3=" & aDir[0] & "\n"
+    If sLib Then
+      sTextLib &= sLib & "\n"
+    Endif
+  Endif
+  sTextLib = Trim(sTextLib)
+  
+End
+
+Public Sub LibComEli()
+  
+  Dim aSearchPath As New String[]
+  Dim cSearch As Collection
+  Dim cFile As Collection
+  Dim sDir As String
+  Dim sFile As String
+  Dim sPattern As String
+  Dim aLib As New String[]
+  
+  Dim aText As New String[]
+  ' Dim sList As String
+  Dim sVar As String
+  
+  sVar = Env["LIBPATH"]
+  If sVar Then 
+    aSearchPath = Split(sVar, ":")
+  Else
+    aSearchPath = ["/usr/lib"]
+  Endif
+  
+  cSearch = ["QT4": "libQtCore.so.*.*.*", "QT5": "libQt5Core.so.*.*.*", "GTK+2": "libgtk-x11-2*.so.*.*.*", "GTK+3": "libgtk-3*.so.*.*.*"]
+  
+  cFile = New Collection
+  aText.Add("")
+  asListlib.clear
+  For Each sDir In aSearchPath
+    For Each sFile In RDir(sDir, "", gb.File, False)
+      sFile = File.Name(sFile)
+      For Each sPattern In cSearch
+        If sFile Like sPattern And If Not cFile.Exist(sFile) Then
+          aLib.Add(cSearch.Key & "=" & sFile)
+          asListlib.Add(cSearch.Key & "=" & sFile)
+          Break
+        Endif
+      Next
+    Next
+  Next
+  asListlib.Sort()
+  
+  aText.Insert(aLib.Sort())
+  sList = aText.Join(gb.NewLine)
+  sList = Trim(sList)
+  
+End
+
+Public Sub tlbUpdate_Click()
+  
+  Update
+  
+End
+
+Public Sub pnTitle_MouseDown()
+  
+End

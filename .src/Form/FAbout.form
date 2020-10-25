@@ -1,0 +1,224 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,93,65)
+  Background = &H2C3E50&
+  Foreground = &HBBD2D2&
+  Text = ("About CPU-Info")
+  Icon = Picture["img/cpu-info.svg"]
+  Resizable = False
+  { pnTitle Panel
+    MoveScaled(1,0,91,18)
+    { lblTitle Label
+      MoveScaled(13,3,58,4)
+      Font = Font["+6"]
+      Text = ("CPU-Info")
+    }
+    { picLogo PictureBox
+      MoveScaled(2,2,8,8)
+      Picture = Picture["img/cpu-info.svg"]
+      Stretch = True
+      Alignment = Align.Center
+    }
+    { lblVersion Label
+      MoveScaled(13,6,41,4)
+    }
+  }
+  { VBox1 VBox
+    MoveScaled(1,19,16,33)
+    { BtnPlus0 CBtnPlus
+      MoveScaled(1,1,15,6)
+      Font = Font["8"]
+      Foreground = &HE0E0E0&
+      NoTabFocus = True
+      Mouse = Mouse.Pointing
+      EnterColor = &H042C37&
+      FlashColor = &HE0E0E0&
+      Icon = Picture["img/home.svg"]
+      Text = ("Home")
+    }
+    { BtnPlus1 CBtnPlus
+      MoveScaled(1,8,15,6)
+      Font = Font["8"]
+      Foreground = &HE0E0E0&
+      NoTabFocus = True
+      Mouse = Mouse.Pointing
+      EnterColor = &H042C37&
+      FlashColor = &HE0E0E0&
+      Icon = Picture["img/ext4.svg"]
+      Text = ("License")
+    }
+    { BtnPlus2 CBtnPlus
+      MoveScaled(1,13,15,6)
+      Font = Font["8"]
+      Foreground = &HE0E0E0&
+      NoTabFocus = True
+      Mouse = Mouse.Pointing
+      EnterColor = &H042C37&
+      FlashColor = &HE0E0E0&
+      Icon = Picture["img/update.svg"]
+      Text = ("Update")
+    }
+    { BtnPlus3 CBtnPlus
+      MoveScaled(1,18,15,6)
+      Font = Font["8"]
+      Foreground = &HE0E0E0&
+      NoTabFocus = True
+      Mouse = Mouse.Pointing
+      EnterColor = &H042C37&
+      FlashColor = &HE0E0E0&
+      Icon = Picture["img/user.svg"]
+      Text = ("Thanks")
+    }
+  }
+  { sp1 Panel
+    MoveScaled(0,53,93,11)
+    Expand = True
+    Arrangement = Arrange.Row
+    Margin = True
+    Padding = 1
+    { Separator1 Separator
+      MoveScaled(4,-1,11,4)
+      Expand = True
+    }
+    { lblProject Label
+      MoveScaled(17,2,9,3)
+      Font = Font["Sans Serif,Bold"]
+      Expand = True
+      Padding = 2
+      Text = ("CPU-Info")
+      Alignment = Align.Center
+    }
+    { lblCr Label
+      MoveScaled(3,4,9,3)
+      Expand = True
+      Padding = 2
+      Text = ("Copyright © 2020-2020")
+      Alignment = Align.Center
+    }
+  }
+  { tlblinfo TextLabel
+    MoveScaled(2,10,73,7)
+    Expand = True
+    Padding = 2
+    Text = ("CPU-Info is an application that gathers information for hardware components available on your system.")
+    Alignment = Align.Justify
+  }
+  { pnlLicense Panel
+    MoveScaled(18,19,74,33)
+    Visible = False
+    Expand = True
+    Arrangement = Arrange.Row
+    Margin = True
+    Padding = 2
+    { tlblLicense TextLabel
+      MoveScaled(2,3,70,26)
+      Foreground = &HE0E0E0&
+      Expand = True
+      Padding = 2
+      Text = ("    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>.")
+      Alignment = Align.Justify
+    }
+  }
+  { pnlUpdate Panel
+    MoveScaled(15,-1,74,33)
+    Visible = False
+    Expand = True
+    Margin = True
+    Padding = 2
+    { tlbUpdate ToolButton
+      MoveScaled(32,4,22,4)
+      Expand = True
+      AutoResize = True
+      Text = ("Check Update")
+      Picture = Picture["icon:/small/refresh"]
+      Border = True
+    }
+    { HBox2 HBox
+      MoveScaled(13,14,59,5)
+      Spacing = True
+      Margin = True
+      Padding = 5
+      Indent = True
+      { btnPage Button
+        MoveScaled(15,1,12,3)
+        Expand = True
+        Text = ("Website")
+        Picture = Picture["icon:/small/internet"]
+      }
+      { btnEmail Button
+        MoveScaled(28,1,12,3)
+        Expand = True
+        Text = ("Mail")
+        Picture = Picture["icon:/small/info"]
+      }
+      { btnEmail2 Button
+        MoveScaled(42,1,12,3)
+        Expand = True
+        Text = ("Git")
+        Picture = Picture["img/git.png"]
+      }
+    }
+    { TlbDona ToolButton
+      MoveScaled(32,22,20.1429,8.7143)
+      Picture = Picture["img/donate.png"]
+      Border = True
+    }
+    { pnlStatus Panel
+      MoveScaled(0,9,73.8571,4)
+      Expand = True
+      Arrangement = Arrange.Fill
+      { lblStatus Label
+        MoveScaled(1,0,72,4)
+        Visible = False
+        Font = Font["Bold"]
+        Foreground = &HFFFFFF&
+        Expand = True
+        Alignment = Align.Right
+      }
+    }
+  }
+  { pnlHome Panel
+    MoveScaled(18,19,74,33)
+    Expand = True
+    Arrangement = Arrange.Row
+    Margin = True
+    Padding = 2
+    { GridSystem GridView
+      MoveScaled(0,1,56,47)
+      Mouse = Mouse.Pointing
+      Expand = True
+      Border = False
+    }
+  }
+  { pnlThanks Panel
+    MoveScaled(18,19,74,33)
+    Visible = False
+    Expand = True
+    Arrangement = Arrange.Row
+    Margin = True
+    Padding = 2
+    { GridThanks GridView
+      MoveScaled(-2,0,56,47)
+      Mouse = Mouse.Pointing
+      Expand = True
+      Border = False
+    }
+  }
+  { HBClose HBox
+    MoveScaled(1,60,91,4)
+    Spacing = True
+    Indent = True
+    { pnlExp Panel
+      MoveScaled(11,0,33,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+    { btnClose Button
+      MoveScaled(69,0,14,4)
+      Mouse = Mouse.Pointing
+      Text = Shortcut(("Close"), "C")
+      Picture = Picture["icon:/small/cancel"]
+    }
+  }
+}

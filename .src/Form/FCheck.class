@@ -1,0 +1,198 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+sNewList As New String[]
+sAut As String
+$picStatus As String[] = ["img/cancel.svg", "img/install.svg"]
+
+''Dir
+bDir As String = "/usr/bin/"
+sbDir As String = "/usr/sbin/"
+libDir As String = "/usr/lib/"
+
+''List dependency
+iListApps As String[] = ["x86_64-linux-gnu/libcpuinfo.so.0", "cpuid_tool", "libtoolize", "wmctrl", "hwinfo", "glxinfo", "lshw", "lsscsi"]
+iListAppInstall As String[] = ["libcpuinfo0", "cpuidtool", "libtool", "wmctrl", "hwinfo", "mesa-utils", "lshw", "lsscsi"]
+iDir As String[] = [libDir, bDir, bDir, bDir, sbDir, bDir, bDir, bDir]
+
+Public Sub List_Apps()
+  
+  With Grid
+    .Columns.Count = 4
+    .Font.Bold = True
+    .Font.Size = 8
+    .Background = Color.Transparent
+    .Header = GridView.Horizontal
+    .columns[0].width = 200
+    .Columns[1].width = 150
+    .Columns[2].width = 70
+    .Columns[3].width = 70
+    .Columns[0].Text = ("Libreria")
+    .Columns[1].Text = ("Version")
+    .Columns[2].Text = ("Installed")
+    .Columns[3].Text = ("Path")
+  End With
+  
+End
+
+Public Sub Call()
+  
+  Dim a As String
+  Dim i As Integer = -1
+  Dim sVersion As String
+  
+  For Each a In iListApps
+    Inc i
+    
+    With Grid
+      
+      ''Red Hat/Fedora
+      ' Shell ("dnf list " & iListAppInstall[i] & "| grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      ''Arch
+      'Shell ("pacman -Si " & iListAppInstall[i] & "| grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      
+      ''SLES/openSUSE
+      'Shell ("zypper info " & iListAppInstall[i] & "| grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      
+      ''Gentoo
+      'Shell ("emerge -S " & iListAppInstall[i] & "| grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      
+      ''Debian/Ubuntu
+      'Shell ("apt show" & Space(1) & iListAppInstall[i] & Space(1) & "| grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      Shell ("apt show  " & iListAppInstall[i] & " | grep -i 'Version' | cut -d ':' -f2") To sVersion 
+      
+      sVersion = Trim(sVersion)
+      .Rows.Count = iListApps.Count
+      .[i, 0].text = iListApps[i]
+      .[i, 1].text = sVersion
+      .[i, 3].text = iDir[i]
+      
+      If (Exist(iDir[i] & iListApps[i])) Then
+        .[i, 2].Picture = Picture[$picStatus[1]].Image.Stretch(22, 22).Picture       
+      Else
+        .[i, 2].Picture = Picture[$picStatus[0]].Image.Stretch(22, 22).Picture
+      Endif 
+    End With
+    
+  Next
+  
+End
+
+Public Sub Install_Lib()
+  
+  Dim a As String
+  Dim i As Integer = -1
+  Dim sList As String
+  
+  For Each a In iListApps
+    Inc i
+    If Not (Exist(iDir[i] & iListApps[i])) Then
+      
+      If iListApps[i] Then  
+        ' sNewList.clear
+        sNewList.Add(iListAppInstall[i], i)
+      Endif 
+      
+      sList = sNewList.Join(Space(1))
+      Print sList
+    Endif
+  Next
+  
+  If sNewList.Count = 0 Then
+    
+    Message.Title = (Application.Name)
+    Message.Info(("All dependencies are installed, there is nothing to install..."))
+    Return
+    
+  Else
+    
+    application.busy = 1
+    sAut = FAuthenticate.Command("apt install -y " & sList)
+    sNewList.clear
+    application.busy = 0
+    
+  Endif
+  
+  Wait
+  Call
+  Wait
+  Check_Final
+  
+End
+
+Public Sub Form_Open()
+  
+  List_Apps
+  Call
+  
+End
+
+Public Sub btnRun_Click()
+  
+  Install_Lib
+  
+End
+
+Public Sub Check_Final()
+  
+  Dim a As String
+  Dim i As Integer = -1
+  Dim iDiff As Integer
+  
+  For Each a In iListApps
+    Inc i
+    
+    If Not (Exist(iDir[i] & iListApps[i])) Then
+      
+      If iListApps[i] Then  
+        sNewList.clear
+        sNewList.Add(iListAppInstall[i], i)
+      Endif 
+      
+    Endif
+    
+    iDiff = iListApps.Count - sNewList.Count
+    
+  Next
+  If (iDiff = iListAppInstall.Count) Then
+    MDependency.Load
+    Me.Close
+  Else
+    Me.Close
+  Endif
+  
+End
+
+Public Sub btnClose_Click()
+  
+  Check_Final
+  
+End
+
+Public Sub Grid_Click()
+  
+End

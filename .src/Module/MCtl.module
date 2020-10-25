@@ -1,0 +1,1118 @@
+' Gambas module file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+Const SIZE As Integer = 32
+Const ICON As Integer = 20
+Const PADDING As Integer = 2
+Const W As Integer = 805
+Const H As Integer = 610
+
+BACKGROUND_COLOR_DARK As Integer = &002c3e50
+FONT_COLOR_DARK As Integer = &hDDDDFF
+
+BACKGROUND_COLOR_WHITE As Integer = &hDDDDFF
+FONT_COLOR_WHITE As Integer = &002c3e50
+
+BACKGROUND_COLOR As Integer
+FONT_COLOR As Integer
+
+$MX As Integer
+$MY As Integer
+
+'$FSystem As Form
+$hPanel As Panel
+$hPanelSpc As Panel
+$hPnlGaugeRam As Panel
+$hPnlViewHD As Panel
+$hPnlGaugeHD As Panel
+$hPnlContainer As Panel
+$hVSplMenu As VSplit
+
+$iViewLst As IconView
+$hLabel As Label
+$SwitchBtn As SwitchButton
+$hScrollV As ScrollView
+$hGView As GridView
+$iView As IconView
+$hCirG As CircleGauge
+$hPicture As PictureBox
+
+''Create Controls
+
+Public Sub sThemes()
+  
+  If Application.DarkTheme = True Then
+    BACKGROUND_COLOR = BACKGROUND_COLOR_WHITE
+    FONT_COLOR = FONT_COLOR_WHITE
+  Else
+    BACKGROUND_COLOR = BACKGROUND_COLOR_DARK
+    FONT_COLOR = FONT_COLOR_DARK
+    
+  Endif
+  
+End
+
+Public Sub Init_Form_Sys()
+  
+  ''Create Form
+  sThemes
+  
+  ''Create panel space after the title panel
+  $hPanelSpc = New Panel(FSystem) As "pn1"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
+  ''Create panel container ctl
+  $hPnlContainer = New Panel(FSystem) As "pnCount"
+  With $hPnlContainer
+    .Arrangement = Arrange.Horizontal
+    .H = 56
+  End With
+  
+  ''Create panel space before infosys
+  $hPanelSpc = New Panel(FSystem) As "pn2"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
+  ''Create picture logo processor
+  $hPicture = New PictureBox($hPnlContainer) As "hPicLogo"
+  With $hPicture
+    .w = 56
+    .Stretch = True
+    .Picture = Picture["img/cpu.svg"]
+  End With
+  
+  ''Create panel space logo/title
+  $hPanelSpc = New Panel($hPnlContainer) As "pn3"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
+  ''Create text proce
+  $hLabel = New Label($hPnlContainer) As "hLabelProce"
+  With $hLabel
+    .h = 56
+    .Alignment = Align.Center
+    .Border = Border.None
+    .Font.Bold = True
+    .Font.Size = 16
+    .Foreground = FONT_COLOR
+    .Padding = 3
+    .AutoResize = True
+    .Text = "INTEL & AMD"
+  End With
+  
+  ''Create panel space after text proce
+  $hPanelSpc = New Panel($hPnlContainer) As "pn4"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+    .Expand = True
+    '  .Background = Color.Blue
+  End With
+  
+  ''Create panel infosys
+  $hPnlContainer = New Panel(FSystem) As "pn5"
+  With $hPnlContainer
+    .Arrangement = Arrange.Horizontal
+    .Expand = True
+  End With
+  
+  ''Create panel menu
+  $hVSplMenu = New VSplit($hPnlContainer) As "VSMenu"
+  With $hVSplMenu
+    .w = 200
+    .Spacing = True
+  End With
+  
+  ''Create iconview menu
+  $iViewLst = New IconView($hVSplMenu) As "$iViewLst"
+  With $iViewLst
+    .Orientation = Arrange.Horizontal
+    .Foreground = FONT_COLOR '&ffffff&
+    .Background = Color.Transparent
+    .Font.Size = 8
+    .Border = False
+    .Mouse = Mouse.Pointing
+    .Expand = True
+  End With
+  
+  ''Create panel description
+  $hVSplMenu = New VSplit($hPnlContainer) As "VSDes"
+  With $hVSplMenu
+    .w = 200
+    .Expand = True
+    .Spacing = True
+  End With
+  
+  ''Create ScrollView description
+  $hScrollV = New ScrollView($hVSplMenu) As "sScroll"
+  With $hScrollV
+    .Arrangement = Arrange.Vertical
+    .Border = False
+    .Expand = True
+    .Margin = True
+    .NoBackground = True
+    .NoShadow = True
+    .Padding = 2
+    .ScrollBar = Arrange.None
+    .Shadow = True
+    .Background = Color.Transparent
+    .Font.Size = 8
+  End With
+  
+  ''Create iconview description
+  $iView = New IconView($hScrollV) As "$iView"
+  With $iView
+    .Expand = True
+    .Orientation = Arrange.Horizontal
+    .Foreground = FONT_COLOR
+    .Background = Color.Transparent
+    .Font.Size = 8
+    .Border = False
+    .Mouse = Mouse.Pointing
+  End With
+  
+End
+
+''Fill menu list
+Public Sub FillMenu()
+  
+  $iViewLst.Add(0, ("Overview"), Picture["img/system.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(1, ("Device"), Picture["img/device.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(2, ("Processor"), Picture["img/cpu.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(3, ("Memory"), Picture["img/ram.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(4, ("Hard Disk"), Picture["img/hd.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(5, ("System"), Picture["img/os.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(6, ("Desktop"), Picture["img/de.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(7, ("Motherboard"), Picture["img/monitor.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  $iViewLst.Add(8, ("Graphics"), Picture["img/video.svg"].Image.Stretch(SIZE, SIZE).Picture)
+  
+End
+
+Public Sub FillList()
+  
+  '' Load information
+  
+  FillMenu
+  MInfo.GetListOverview
+  MInfo.GetInfoMemory
+  MInfo.GetListStore
+  GetListOverview
+  CheckModelProces
+  FSystem.Show
+  
+End
+
+Public Sub CheckModelProces()
+  
+  ''Check processor
+  
+  Dim s As String = MInfo.sPro
+  
+  ''Verify that a string contains a "Processor Type" pattern
+  
+  If s Like "*Intel*" Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/intel.png"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "INTEL"
+    
+  Else If s Like "*AMD*" Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/amd.png"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "AMD"
+    
+  Else If Not (InStr(s, "Intel")) Or Not (InStr(s, "AMD")) Then
+    $hPicture.Picture.Clear
+    $hPicture.Picture = Picture["img/Proce/cpu.svg"].Image.Stretch(92, 92).Picture
+    $hLabel.Text = "Generic"
+  Endif
+  
+End
+
+Public Sub GetListOverview()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Device"): "device", ("Processor"): "processor", ("Memory"): "ram", ("Hard Disk"): "hd", ("Motherboard"): "motherboard", ("Graphic"): "graphic", ("Monitor"): "monitor", ("Network"): "network", ("Wifi"): "wifi", ("Sound"): "sound", ("OS"): "os", ("Kernel"): "kernel", ("Distribution"): "distribution"]
+  Dim cSyst As String[] = [("Device"), ("Processor"), ("Memory"), ("Hard Disk"), ("Motherboard"), ("Graphic"), ("Monitor"), ("Network"), ("Wifi"), ("Sound"), ("OS"), ("Kernel"), ("Distribution")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListOverview
+  $iView.Clear
+  cSysInfo = [(MInfo.sMachine), (MInfo.sPro), (MInfo.sRam), (MInfo.sSizeHD), (MInfo.sVendorMother), (MInfo.sVGA), (MInfo.sMonitor), (MInfo.sEthernet), (MInfo.sNetwork), (MInfo.sAudio), (MInfo.sOS & Space(2) & System.Architecture), (MInfo.sKernel), MInfo.GetDistribution()]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListDevice()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Device"): "device", ("Processor"): "processor", ("Memory"): "ram", ("Hard Disk"): "hd", ("OS"): "os", ("Desktop"): "desktop"]
+  Dim cSyst As String[] = [("Device"), ("Processor"), ("Memory"), ("Hard Disk"), ("OS"), ("Desktop")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListDevice
+  $iView.Clear
+  cSysInfo = [(MInfo.sMachine), (MInfo.sPro), (MInfo.sRam), (MInfo.sSizeHD), (MInfo.sOS & Space(2) & System.Architecture), Desktop.Type]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListProcessor()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Vendor"): "processor", ("Processor"): "processor", ("CPUs"): "processor", ("Cache"): "processor", ("Family"): "processor", ("Architecture"): "processor", ("Generation"): "processor"]
+  Dim cSyst As String[] = [("Vendor"), ("Processor"), ("CPUs"), ("Cache"), ("Family"), ("Architecture"), ("Generation")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListProcessor
+  $iView.Clear
+  cSysInfo = [(MInfo.sVendor), (MInfo.sPro), (MInfo.sCores) & Space$(2) & "Core's", (MInfo.sCacheProce), (MInfo.sFamily), (MInfo.sArchProce), (MInfo.sGeneration)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListMemory()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Total"): "memory", ("Used"): "memory", ("Free"): "memory"]
+  Dim cSyst As String[] = [("Total"), ("Used"), ("Free")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  Try $hPnlGaugeRam.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  $iView.Expand = False
+  $iView.Orientation = Arrange.Row
+  
+  ''Module flame information to display
+  MInfo.GetListMemory
+  $iView.Clear
+  
+  ''Formats the information
+  Try MInfo.sRamTotal = Format(MInfo.sRamTotal / 1024, "0.#") & Space(2) & "G"
+  Try MInfo.sRamUsed = Format(MInfo.sRamUsed / 1024, "0.#") & Space(2) & "G"
+  Try MInfo.sRamFree = Format(MInfo.sRamFree / 1024, "0.#") & Space(2) & "G"
+  cSysInfo = [(MInfo.sRamTotal), (MInfo.sRamUsed), (MInfo.sRamFree)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+  ''Call graphic ram use
+  GetInfoCircleRam
+  
+End
+
+Public Sub GetInfoCircleRam()
+  
+  ''Graphic ram
+  Dim iH$iView As Integer = $hScrollV.h - 4
+  
+  Dim iSize As Integer = 100
+  Dim iUsed As Integer = MInfo.iRamUsed
+  Dim iFree As Integer = MInfo.iRamFree
+  Dim iTotal As Integer = MInfo.iRamTotal
+  
+  If ($iView.h = iH$iView) Then
+    $iView.h = $iView.h - 100
+  Endif
+  
+  iTotal = iTotal * 100 / iTotal
+  iTotal = MInfo.iRamTotal * 100 / MInfo.iRamTotal
+  
+  $hPnlGaugeRam = New Panel($hScrollV) As "pnhCirG"
+  With $hPnlGaugeRam
+    .Arrangement = Arrange.Horizontal
+    .Margin = False
+    .Expand = True
+    .Padding = 5
+    .H = iSize
+    .Border = Border.None
+  End With
+  
+  $hLabel = New Label($hPnlGaugeRam) As "hLabel"
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Total")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeRam) As "hCirG"
+  With $hCirG
+    .w = iSize
+    .h = iSize
+    .Unit = "%"
+    .Value = iTotal
+    .Animated = True
+    .Color = &HFF7F00&
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeRam) As "hLabel"
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Used")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  iUsed = MInfo.iRamUsed * 100 / MInfo.iRamTotal
+  
+  $hCirG = New CircleGauge($hPnlGaugeRam) As "hCirG"
+  With $hCirG
+    .w = iSize
+    .h = iSize
+    .Unit = "%"
+    .Value = iUsed
+    .Animated = True
+    .Color = &CB3234&
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeRam) As "hLabel"
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Free")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  iFree = (MInfo.iRamFree) * 100 / MInfo.iRamTotal
+  iFree = iFree + 1
+  
+  $hCirG = New CircleGauge($hPnlGaugeRam) As "hCirG"
+  With $hCirG
+    .w = iSize
+    .h = iSize
+    .Unit = "%"
+    .Value = iFree
+    .Animated = True
+    .Color = &3B83BD
+    .LabelColor = Color.White
+  End With
+  
+End
+
+Public Sub GetListStore()
+  
+  Dim s As String
+  Dim sSDx As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Size"): "hd", ("Vendor"): "hd", ("Model"): "hd", ("Logical Name"): "hd", ("Type"): "hd", ("Class"): "hd", ("Speed"): "hd"]
+  Dim cSyst As String[] = [("Size"), ("Vendor"), ("Model"), ("Logical Name"), ("Class"), ("Speed")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  Try $hPnlGaugeRam.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  $iView.Expand = False
+  $iView.Orientation = Arrange.Row
+  
+  ''Module flame information to display
+  MInfo.GetListStore
+  $iView.Clear
+  cSysInfo = [(MInfo.sSizeHD), (MInfo.sVendorHD), (MInfo.sModelHD), (MInfo.sLogicalNameHD), (MInfo.sClassHD), (MInfo.sSpeedHD)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  
+  ''Show HD sda
+  For Each sSDx In Dir("/sys/block/", "sda")
+    Inc i
+    $iView.Add(i, ("Disk Drive: ") & sSDx, Picture["img/hd.svg"].Image.Stretch(ICON, ICON).Picture)
+  Next
+  
+  Dec Application.Busy
+  
+  ''Call event
+  MInfo.sSDx = sSDx
+  GetListInfoHD_SDx
+  
+End
+
+Public Sub GetListInfoHD_SDx()
+  
+  ''Show list partitions HD
+  
+  Dim sListHDTmp As String
+  Dim iSize As Integer = 130
+  Dim i As Integer = -1
+  Dim a, b, c, d, e, f, g As String
+  Dim $a, $b, $c, $d, $e, $f, $g As String[]
+  Dim iH$iView As Integer = $hScrollV.h - 4
+  
+  If ($iView.h = iH$iView) Then
+    $iView.h = $iView.h - 210
+  Endif
+  
+  For Each sListHDTmp In MInfo.$sInfoHD
+    ''Show HD sda
+    If (InStr(sListHDTmp, "sda")) Then
+      ''Create panel for grid
+      $hPnlViewHD = New Panel($hScrollV) As "$hPnlViewHD"
+      With $hPnlViewHD
+        .Arrangement = Arrange.Horizontal
+        .Background = Color.Transparent
+        .Spacing = True
+        .Margin = False
+        .Padding = 25
+        .H = iSize
+        .w = iSize
+        .Border = Border.None
+      End With
+      
+      ''Create grid for partitions
+      $hGView = New GridView($hPnlViewHD) As "$hGView"
+      With $hGView
+        .Columns.Count = 7
+        .Rows.Height = 25
+        .Columns.Ascending = True
+        .Background = Color.Transparent
+        .H = 140
+        .Grid = True
+        .Expand = True
+        .Border = True
+        .Mode = Select.Single
+        .ScrollBar = Scroll.None
+        .Sorted = True
+        .Tracking = True
+        .Header = GridView.Horizontal
+        .Font.Bold = True
+        .Font.Size = 8
+        .Foreground = FONT_COLOR
+        .columns[0].width = 125
+        .Columns[1].width = 75
+        .Columns[2].width = 75
+        .Columns[3].width = 75
+        .columns[2].Alignment = Align.Right
+        .columns[3].Alignment = Align.Right
+        .columns[4].Alignment = Align.Right
+        .columns[5].Alignment = Align.Center
+        .Columns[0].Text = ("Partition")
+        .Columns[1].Text = ("Type")
+        .Columns[2].Text = ("Size")
+        .Columns[3].Text = ("Used")
+        .Columns[4].Text = ("Free")
+        .Columns[5].Text = ("% Used")
+        .Columns[6].Text = ("Mount")
+      End With
+    Endif
+    
+  Next
+  
+  ''Show info HD
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $1'} " To a
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $2'} " To b
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $3'} " To c
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $4'} " To d
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $5'} " To e
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $6'} " To f
+  Try Shell "df -Th | grep " & MInfo.sSDx & " | awk {'print $7'} " To g
+  
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $3'}" To MInfo.sToolUsed
+  MInfo.sToolUsed = Trim(MInfo.sToolUsed)
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $4'}" To MInfo.sToolFree
+  MInfo.sToolFree = Trim(MInfo.sToolFree)
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $5'}" To MInfo.sUsedHDP
+  MInfo.sUsedHDP = Trim(MInfo.sUsedHDP)
+  
+  $a = Split(a, gb.CrLf, "", True)
+  $b = Split(b, gb.CrLf, "", True)
+  $c = Split(c, gb.CrLf, "", True)
+  $d = Split(d, gb.CrLf, "", True)
+  $e = Split(e, gb.CrLf, "", True)
+  $f = Split(f, gb.CrLf, "", True)
+  $g = Split(g, gb.CrLf, "", True)
+  
+  For Each a In $a
+    Inc i
+    ''Show result HD
+    With $hGView
+      .Rows.Count = $a.Count
+      .[i, 0].text = $a[i]
+      .[i, 0].Picture = Picture["img/ok.svg"].Image.Stretch(22, 22).Picture
+      .[i, 0].Background = Color.Merge(Color.SelectedBackground, &2679db, 0.75)
+      .[i, 1].text = $b[i]
+      .[i, 1].Picture = Picture["img/ext4.svg"].Image.Stretch(22, 22).Picture
+      .[i, 2].text = $c[i]
+      .[i, 3].text = $d[i]
+      .[i, 4].text = $e[i]
+      .[i, 5].text = $f[i]
+      .[i, 6].text = $g[i]
+      .[i, 6].Picture = Picture["img/folder-linux.svg"].Image.Stretch(22, 22).Picture
+    End With
+  Next
+  
+  ''Call event
+  $hGView_Sort
+  GetInfoCircleHD
+  'Catch
+  
+End
+
+Public Sub $hGView_Sort() ''CODE GAMBAS
+  
+  ''Sort cell
+  Dim Values, ValueSorted As New String[]
+  Dim Nx, iNx As Integer
+  
+  ' Load sort column into string array
+  For Nx = 0 To $hGView.Rows.Max
+    Values.Add($hGView[Nx, $hGView.Columns.Sort].Text)
+  Next
+  
+  ' Copy values to new array and sort it based on status of sort indicator
+  ValueSorted = Values.Copy()
+  ValueSorted.Sort(IIf($hGView.Columns.Ascending, gb.Ascent, gb.Descent))
+  
+  ' Iterate through table swapping appropriate values
+  For Nx = 0 To ValueSorted.Max
+    For iNx = 0 To MCtl.$hGView.Columns.Max
+      Swap $hGView[Nx, iNx].Text, $hGView[Values.Find(ValueSorted[Nx], 0, Nx), iNx].Text
+    Next
+    
+    ' Pick up new order to preserve proper handling of indexing and duplicate values
+    Values.Clear()
+    For iNx = 0 To $hGView.Rows.Max
+      Values.Add($hGView[iNx, $hGView.Columns.Sort].Text)
+    Next
+    
+  Next
+  
+  $hGView.Refresh()
+  
+Catch
+  Message.Title = (Application.Name)
+  Message.Error(("Can't from read the source file or disk...") & "\n\n" & Error.Text)
+  
+End
+
+Public Sub GetInfoCircleHD()
+  
+  ''Graphic HD
+  
+  Dim sUsed As String = MInfo.sUsedHDP
+  Dim iFree As Integer
+  Dim iTotal As Integer = 100
+  Dim iSize As Integer = 75
+  
+  sUsed = Left$(sUsed, -1)
+  iFree = 100 - sUsed
+  
+  $hPnlGaugeHD = New Panel($hScrollV) As "$hPnlGaugeHD"
+  With $hPnlGaugeHD
+    .Arrangement = Arrange.Horizontal
+    .Background = Color.Transparent
+    .Spacing = True
+    .Margin = False
+    .Padding = 25
+    .H = iSize
+    .w = iSize
+    .Border = Border.None
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As "sLabel"
+  With $hLabel
+    .w = 35
+    .h = 35
+    .Mouse = 13
+    .Text = "Size"
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 70
+    .h = 70
+    .Unit = "%"
+    Try .Value = iTotal
+    .Tooltip = MInfo.sSizeHD
+    .Mouse = 13
+    .Animated = True
+    .Color = &HFF7F00&
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As "sLabel"
+  With $hLabel
+    .w = 35
+    .h = 35
+    .Mouse = 13
+    .Text = "Used"
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 70
+    .h = 70
+    .Unit = "%"
+    Try .Value = sUsed
+    .Color = &CB3234&
+    .Tooltip = MInfo.sToolUsed
+    .Mouse = 13
+    .Animated = True
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As "sLabel"
+  With $hLabel
+    .w = 35
+    .h = 35
+    .Mouse = 13
+    .Text = "Free"
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 70
+    .h = 70
+    .Unit = "%"
+    Try .Value = (iFree)
+    .Tooltip = MInfo.sToolFree
+    .Mouse = 13
+    .Animated = True
+    .Color = &3B83BD ' &HFF7F00&
+    .LabelColor = Color.White
+  End With
+Catch
+  
+End
+
+Public Sub GetInfoCircleHD_Ultimo()
+  
+  ''Graphic HD
+  
+  Dim sUsed As String '= MInfo.sUsedHDP
+  Dim iUsed As Integer
+  Dim sFree As String
+  Dim iFree As Integer
+  Dim iTotal As Integer '= 100
+  Dim sTotal As String
+  
+  Dim iSize As Integer = 75
+  
+  'Dim iUsado As Integer
+  'Dim sUsado As String
+  
+  ' Dim iDisponible As Integer
+  ' Dim sDisponible As String
+  
+  ' Dim iTotal1 As Integer
+  ' Dim sTotal1 As String
+  
+  'sUsed = Left$(sUsed, -1)
+  'iFree = sUsed - Val(sUsed)
+  
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $2'}" To sTotal
+  sTotal = Trim(sTotal)
+  sTotal = Left$(sTotal, -1)
+  iTotal = Val(sTotal)
+  
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $3'}" To sUsed
+  sUsed = Trim(sUsed)
+  sUsed = Left$(sUsed, -1)
+  iUsed = CInteger(Val(sUsed))
+  
+  Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $4'}" To sFree
+  sFree = Trim(sFree)
+  sFree = Left$(sFree, -1)
+  iFree = CInteger(Val(sFree))
+  
+  iUsed = iUsed * 100 / iTotal
+  iFree = iFree * 100 / iTotal
+  Print iFree
+  Print iUsed
+  
+  $hPnlGaugeHD = New Panel($hScrollV) As "$hPnlGaugeHD"
+  With $hPnlGaugeHD
+    .Arrangement = Arrange.Horizontal
+    .Background = Color.Transparent
+    .Spacing = True
+    .Margin = False
+    .Padding = 5
+    .H = iSize
+    .w = iSize 
+    .Border = Border.None
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As "sLabel"
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Size")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Left
+    .Font.Size = 8
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 75
+    .h = 35
+    .Unit = "%"
+    Try .Value = iTotal
+    .Tooltip = MInfo.sSizeHD
+    .Mouse = 13
+    .Animated = True
+    .Color = &HFF7F00&
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As ("sLabel")
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Used")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+    '    .traslate = True
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 70
+    .h = 70
+    .Unit = "%"
+    Try .Value = iUsed
+    .Color = &CB3234&
+    .Tooltip = MInfo.sToolUsed
+    .Mouse = 13
+    .Animated = True
+    .LabelColor = Color.White
+  End With
+  
+  $hLabel = New Label($hPnlGaugeHD) As "sLabel"
+  With $hLabel
+    .w = 75
+    .h = 35
+    .Mouse = 13
+    .Text = ("Free")
+    .Foreground = FONT_COLOR
+    .Alignment = Align.Center
+    .Font.Size = 8
+    
+  End With
+  
+  $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"
+  With $hCirG
+    .w = 70
+    .h = 70
+    .Unit = "%"
+    Try .Value = iFree
+    .Color = &CB3234&
+    .Tooltip = MInfo.sToolFree
+    .Mouse = 13
+    .Animated = True
+    .LabelColor = Color.White
+  End With
+  
+End
+
+Public Sub $hGView_Data(Row As Integer, Column As Integer)
+  
+  '' 2 Color grid
+  $hGView.Data.Background = If(Row Mod 2 = 0, &HBFFFBF, &HFFCFCF)
+  
+End
+
+Public Sub GetListOS()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("OS"): "os", ("Desktop"): "desktop", ("Windows Manager"): "wm", ("Shell"): "shell", ("Time Zone"): "zone", ("Language"): "locale", ("X.Org"): "xorg", ("GLX"): "xorg", ("OpenGL"): "opengl", ("Mesa"): "mesa", ("Display Manager"): "display"]
+  Dim cSyst As String[] = [("OS"), ("Desktop"), ("Windows Manager"), ("Shell"), ("Time Zone"), ("Language"), ("X.Org"), ("GLX"), ("OpenGL"), ("Mesa"), ("Display Manager")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListOS
+  $iView.Clear
+  cSysInfo = [(MInfo.sOS) & Space(2) & (System.Architecture) & Space(2) & (MInfo.GetDistribution()) & Space(2) & ("Kernel ") & (MInfo.sKernel), (Desktop.Type), (MInfo.sWM), (System.Shell), (MInfo.sTimeZone), (System.Language), (MInfo.sXVersion), (MInfo.sGLXVersion), (MInfo.sOpenGLVersion), (MInfo.sMesaVersion), (MInfo.sDDM)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListDesktop()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Desktop"): "desktop", ("Host"): "device", ("User"): "user", ("Group"): "grouping", ("Theme"): "theme"]
+  Dim cSyst As String[] = [("Desktop"), ("Host"), ("User"), ("Group"), ("Theme")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  '' Information to display
+  $iView.Clear
+  cSysInfo = [(Desktop.Type), (System.Host), (System.User.Name), (System.Domain), (Style.Name)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListMother()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  Dim iIcon As Integer = 25
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Vendor"): "device", ("Model"): "device", ("Version"): "device", ("Bios"): "device", ("Version"): "device", ("Chipset"): "device"]
+  Dim cSyst As String[] = [("Vendor"), ("Model"), ("Version"), ("Bios"), ("Version"), ("Chipset")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListMother
+  $iView.Clear
+  cSysInfo = [(MInfo.sVendorMother), (MInfo.sNameMother), (MInfo.sVersionMother), (MInfo.sVendorBios), (MInfo.sVersionBios), (MInfo.sVendorChassis)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(iIcon, iIcon).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub GetListGraphic()
+  
+  Dim s As String
+  Dim i As Integer = -1
+  ''Collection list upload and picture
+  Dim cImgSys As Collection = [("Graphic"): "graphic", ("Product"): "graphic", ("Vendor"): "graphic", ("Renderer"): "graphic", ("Driver"): "graphic", ("Resolution"): "graphic"]
+  Dim cSyst As String[] = [("Graphic"), ("Product"), ("Vendor"), ("Renderer"), ("Driver"), ("Resolution")]
+  Dim cSysInfo As String[]
+  
+  ''Delete panels
+  Try $hPnlGaugeRam.Delete
+  Try $hPnlGaugeHD.Delete
+  Try $hPnlViewHD.Delete
+  
+  ''Returns properties of the control
+  $iView.Expand = True
+  $iView.Orientation = Arrange.Horizontal
+  
+  ''Module flame information to display
+  MInfo.GetListGraphic
+  $iView.Clear
+  cSysInfo = [(MInfo.sVGA), (MInfo.sProductVGA), (MInfo.sVendorVGA), (MInfo.sRendererVGA), (MInfo.sDriverVGA), (MInfo.sResolutionVGA)]
+  
+  ''Loads the list into the control
+  Inc Application.Busy
+  For Each s In cSyst
+    Inc i
+    $iView.Add(i, cSyst[i] & ": " & cSysInfo[i], Picture["img/" & LCase(cImgSys[s] & ".svg")].Image.Stretch(ICON, ICON).Picture)
+  Next
+  Dec Application.Busy
+  
+End
+
+Public Sub $iViewLst_Click()
+  
+  ''Select menu
+  If $iViewLst.Item.Key = 0 Then
+    GetListOverview
+  Endif
+  
+  If $iViewLst.Item.Key = 1 Then
+    GetListDevice
+  Endif
+  
+  If $iViewLst.Item.Key = 2 Then
+    GetListProcessor
+  Endif
+  
+  If $iViewLst.Item.Key = 3 Then
+    GetListMemory
+  Endif
+  
+  If $iViewLst.Item.Key = 4 Then
+    GetListStore
+  Endif
+  
+  If $iViewLst.Item.Key = 5 Then
+    GetListOS
+  Endif
+  
+  If $iViewLst.Item.Key = 6 Then
+    GetListDesktop
+  Endif
+  
+  If $iViewLst.Item.Key = 7 Then
+    GetListMother
+  Endif
+  
+  If $iViewLst.Item.Key = 8 Then
+    GetListGraphic
+  Endif
+  
+End

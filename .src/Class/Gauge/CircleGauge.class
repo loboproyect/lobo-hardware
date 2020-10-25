@@ -1,0 +1,97 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+' This code belongs to Charlie Ogier 
+
+Export
+Inherits _Gauge
+
+Public Const _Properties As String = "*,Min=0,Max=100,Value=50,Unit= %,Label=True,Animated=True,Color={Color},LabelColor={Color}"
+Public Const _Group As String = "Gauges"
+Public Const _DefaultSize As String = "120,120"
+
+Private $iStartAngle As Integer = 270
+
+Private $hCanvas As New DrawingArea(Me) As "Canvas"
+
+Public Sub _new()
+  
+  $hCanvas.Expand = True
+  Me.Max = 100
+  Me.Value = 50
+  Me.Animated = True
+  Me.PreviousValue = 0
+  
+End
+
+Public Sub Canvas_Draw()
+  
+  Dim iDiameter As Integer
+  Dim fLength As Float
+  Dim sLabel As String
+  Dim hLabelDim As RectF
+  Dim bNegative As Boolean
+  
+  If Me.PreviousValue > Me.Value Then bNegative = True
+  
+  sLabel = Me.Value & Me.Unit
+  
+  'Making the ellipse length in radians from the Value
+  If Me.Value Then
+    If Me.Min Then
+      fLength = Max(Me.Value / Me.Max, IIf(Me.Min = 0, 0, Me.Min / Me.Max)) * (2 * Pi)
+    Else
+      fLength = (Me.Value / Me.Max) * (2 * Pi)
+    Endif
+  Else
+    fLength = Max(0, Me.Min)
+  Endif
+  
+  iDiameter = Min($hCanvas.W, $hCanvas.H)
+  
+  With Paint
+    'Circle
+    .LineWidth = iDiameter / 8
+    .Translate(.LineWidth, .LineWidth)
+    .Brush = .Color(Me.Color)
+    .Ellipse(0, 0, iDiameter - (.LineWidth * 2), iDiameter - (.LineWidth * 2), Rad($iStartAngle), fLength)
+    .Stroke()
+    
+    .Translate(-.LineWidth, -.LineWidth)
+    'Label
+    If Me.Label Then
+      .Brush = .Color(Me.LabelColor)
+      hLabelDim = .TextSize(sLabel)
+      .Font.Size = iDiameter / 10
+      .DrawText(sLabel, iDiameter / 2 - hLabelDim.W / 2, iDiameter / 2 - hLabelDim.H / 2, hLabelDim.W, hLabelDim.H, Align.Center)
+      .Stroke()
+    Endif
+  End With
+  
+  Me.PreviousValue = Me.Value
+  
+End

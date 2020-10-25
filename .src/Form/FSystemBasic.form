@@ -1,0 +1,43 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,40,38)
+  PopupMenu = "mnuMain"
+  Icon = Picture["img/cpu-info.png"]
+  Border = False
+  { mnuMain Menu
+    Text = ("Main")
+    Visible = False
+    { mnuThemes Menu
+      Text = ("Themes")
+      Visible = False
+      { mnuThemeWhite Menu
+        Text = ("White")
+      }
+      { mnuThemeDark Menu
+        Text = ("Dark")
+      }
+      { mnuThemeKids Menu
+        Text = ("Kids")
+      }
+    }
+    { mnuStyle Menu
+      Text = ("Style")
+      { mnuFull Menu
+        Text = ("Full")
+      }
+      { mnuBasic Menu
+        Text = ("Basic")
+      }
+    }
+    { mnuAbout Menu
+      Text = ("About")
+    }
+    { mnuSep Menu
+    }
+    { mnClose Menu
+      Text = ("Close")
+      Picture = Picture["img/windows/close.png"]
+    }
+  }
+}

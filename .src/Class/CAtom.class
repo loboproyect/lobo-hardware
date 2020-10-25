@@ -1,0 +1,43 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+' This code belongs to Gambas3
+
+Static Private $cAtom As New Collection
+
+Static Public Sub _get(sAtom As String) As Integer
+  
+  Dim iAtom As Integer
+  
+  Try iAtom = $cAtom[sAtom]
+  If Error Then
+    iAtom = X11.InternAtom(sAtom, True)
+    $cAtom[sAtom] = iAtom
+  Endif
+  Return iAtom
+  
+End

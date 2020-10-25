@@ -1,0 +1,85 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,78.5714,42.8571)
+  Background = &H2C3E50&
+  Foreground = &HBBD2D2&
+  Text = ("Installing dependencies") & "..."
+  Icon = Picture["icon:/32/package"]
+  Arrangement = Arrange.Vertical
+  Spacing = True
+  Margin = True
+  Padding = 5
+  { HBClose HBox
+    MoveScaled(2,0,64,4)
+    Spacing = True
+    Indent = True
+    { picInstall PictureBox
+      MoveScaled(0,0,4,4)
+      Picture = Picture["icon:/32/package"]
+      Stretch = True
+    }
+    { pnlExp Panel
+      MoveScaled(15,0,4,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+    { lblList Label
+      MoveScaled(22,0,34,4)
+      Font = Font["+2"]
+      Text = ("Dependencies")
+      Alignment = Align.Center
+    }
+    { pnlExp2 Panel
+      MoveScaled(58,0,4,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+  }
+  { Grid GridView
+    MoveScaled(3,5,58,17)
+    Font = Font["+1"]
+    Background = &HFFFFFF&
+    Tracking = True
+    Expand = True
+    Mode = Select.Single
+    ScrollBar = Scroll.None
+    Sorted = True
+  }
+  { HBClose2 HBox
+    MoveScaled(6,37,64,4)
+    Spacing = True
+    Indent = True
+    { pnlExp3 Panel
+      MoveScaled(3,0,4,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+    { btnRun Button
+      MoveScaled(9,1,13,3)
+      Background = &H0000FF&
+      Foreground = &HFFFFFF&
+      Mouse = Mouse.Pointing
+      ToolTip = ("Installing dependencies") & "..."
+      Text = ("Install")
+    }
+    { pnlExp5 Panel
+      MoveScaled(27,0,4,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+    { btnClose Button
+      MoveScaled(34,1,15,3)
+      Background = &HFF0000&
+      Foreground = Color.White
+      Mouse = Mouse.Pointing
+      ToolTip = ("Close Windows")
+      Text = ("Close")
+    }
+    { pnlExp4 Panel
+      MoveScaled(58,0,4,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+  }
+}

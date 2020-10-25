@@ -1,0 +1,89 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+W As Integer = MCtl.W
+H As Integer = MCtl.H
+FONT_COLOR As Integer = MCtl.FONT_COLOR
+BACKGROUND_COLOR As Integer = MCtl.BACKGROUND_COLOR
+Settings_Theme As New Settings(Desktop.ConfigDir &/ "CPU-Info" &/ "CPU-Info.conf")
+
+Public Sub _new()
+  
+End
+
+Public Sub Form_Open()
+  
+  Application.Animations = True
+  With FSystem
+    .w = W
+    .H = H
+    .Text = Application.Name
+    .Foreground = FONT_COLOR
+    .Background = BACKGROUND_COLOR
+    .Arrangement = Arrange.Vertical
+    ' .Border = False
+    .Padding = 2
+    .Spacing = True
+    .Move(0, 0)
+    .Show
+    .Sticky = True
+    .Stacking = Window.Normal
+    .TakeFocus = True
+  End With
+  
+End
+
+Public Sub mnuAbout_Click()
+  
+  FAbout.ShowModal
+  
+End
+
+Public Sub mnuFull_Click()
+  
+  Settings_Theme.Write(FSystem)
+  Settings_Theme["Theme/iFull"] = "1"
+  Settings_Theme.Save
+  
+End
+
+Public Sub mnuBasic_Click()
+  
+  Settings_Theme.Write(FSystem)
+  Settings_Theme["Theme/iFull"] = "0"
+  Settings_Theme.Save
+  Settings_Theme.Reload
+  Me.Close
+  FSystemBasic.Show
+  
+End
+
+Public Sub mnuClose_Click()
+  
+  Me.Close
+  
+End

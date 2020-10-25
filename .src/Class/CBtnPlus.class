@@ -1,0 +1,205 @@
+' Gambas class file
+
+' This aplication is a part of Louve Project 
+
+' CPU-Info is an application that gathers information for hardware components available on your system.
+
+' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+
+' Authors:
+'   Herberth Guzmán <herberthguzman@gmail.com>
+
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+
+' You should have received a copy of the GNU General Public License
+' along with this program; If not, see <http://www.gnu.org/licenses/>.
+
+'' NOTA
+'' Check paths and libraries according to your Linux version.
+
+' This code belongs to Charlie Ogier 
+' Put the buttons in a container, they work like RadioButtons
+
+Export
+Inherits UserControl
+
+Public Const _Properties As String = "*,EnterColor{Color},FlashColor{Color},Icon{Picture},Text"
+Public Const _DefaultSize As String = "25,10"
+
+Event Click()
+
+Property Text As String
+Property EnterColor As Integer
+Property FlashColor As Integer
+Property Icon As Picture
+
+PictureBox1 As PictureBox
+Label1 As Label
+HBox1 As HBox
+HBoxFlash As HBox
+hOb As Observer
+
+iEnterColor As Integer = -1
+iBackgroundColor As Integer = -1
+iFlashColor As Integer = -1
+sText As String = Me.Text
+
+Public Sub _new()
+  
+  hOb = New Observer(Me) As "hOb"
+  HBox1 = New HBox(Me)
+  HBoxFlash = New HBox(HBox1)
+  PictureBox1 = New PictureBox(HBox1) As "PictureBox1"
+  Label1 = New Label(HBox1) As "Label1"
+  hOb_Arrange()
+  Switch(False)
+  
+End
+
+Public Sub Reset()
+  
+  Switch(False)
+  
+End
+
+Public Sub ResetAll()
+  
+  Dim oObj As Object
+  
+  For Each oObj In Me.Parent.Children
+    If Object.Type(oObj) = Object.Type(Me) Then oObj.Reset
+  Next
+  
+End
+
+Private Sub Switch(bOnOff As Boolean)
+  
+  Dim oObj As Object
+  Dim siCount As Short
+  
+  If bOnOff = False Then
+    HBoxFlash.Visible = False
+    PictureBox1.Raise
+    Label1.Raise
+  Else
+    HBoxFlash.Visible = True
+    PictureBox1.Raise
+    Raise Click()
+  End If
+  
+  If Me.EnterColor = -1 Then Me.EnterColor = Color.cyan
+  If Me.Background = -1 Then Me.Background = Color.Default
+  If PictureBox1.Picture = Null Then PictureBox1.Picture = Picture["icon:/64/gambas"]
+  If sText = "" Then
+    For Each oObj In Me.Parent.Children
+      If Object.Type(oObj) = Object.Type(Me) Then Inc siCount
+    Next
+    sText = "ButtonPlus" & Str(siCount)
+  End If
+  If iFlashColor = -1 Then iFlashColor = Color.Red
+  hOb_Arrange()
+  
+End
+
+Public Sub hOb_Arrange()
+  
+  HBox1.padding = 5
+  HBox1.Expand = True
+  PictureBox1.Padding = 5
+  PictureBox1.Height = Me.Height
+  PictureBox1.mode = PictureBox.Contain
+  PictureBox1.Width = Me.Height
+  Label1.Padding = 5
+  Label1.Text = sText
+  Label1.Expand = True
+  HBoxFlash.Width = 7
+  HBoxFlash.Background = iFlashColor
+  
+End
+
+Public Sub PictureBox1_MouseDown()
+  
+  Dim oObj As Object
+  
+  For Each oObj In Me.Parent.Children
+    If Object.Type(oObj) = Object.Type(Me) Then oObj.Reset
+  Next
+  
+  Switch(True)
+  
+End
+
+Public Sub Label1_MouseDown()
+  
+  PictureBox1_MouseDown
+  
+End
+
+Public Sub hOb_Enter()
+  
+  Me.Background = iEnterColor
+  
+End
+
+Public Sub hOb_Leave()
+  
+  Me.Background = iBackgroundColor
+  
+End
+
+Private Function Text_Read() As String
+  
+  Return sText
+  
+End
+
+Private Sub Text_Write(Value As String)
+  
+  sText = Value
+  
+End
+
+Private Function EnterColor_Read() As Integer
+  
+  Return iEnterColor
+  
+End
+
+Private Sub EnterColor_Write(Value As Integer)
+  
+  iEnterColor = Value
+  
+End
+
+Private Function FlashColor_Read() As Integer
+  
+  Return iFlashColor
+  
+End
+
+Private Sub FlashColor_Write(Value As Integer)
+  
+  iFlashColor = Value
+  
+End
+
+Private Function Icon_Read() As Picture
+  
+  Return PictureBox1.Picture
+  
+End
+
+Private Sub Icon_Write(Value As Picture)
+  
+  PictureBox1.Picture = Value
+  
+End
+' Gambas class file
