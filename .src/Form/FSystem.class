@@ -87,3 +87,11 @@ Public Sub mnuClose_Click()
   Me.Close
   
 End
+
+Public Sub Form_KeyPress()
+  
+  If Key.Code = Key.Esc Then
+    Me.Close
+  Endif
+  
+End

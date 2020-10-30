@@ -121,7 +121,7 @@
     }
   }
   { pnlUpdate Panel
-    MoveScaled(15,-1,74,33)
+    MoveScaled(18,19,74,33)
     Visible = False
     Expand = True
     Margin = True
@@ -152,7 +152,7 @@
         Text = ("Mail")
         Picture = Picture["icon:/small/info"]
       }
-      { btnEmail2 Button
+      { btnGit Button
         MoveScaled(42,1,12,3)
         Expand = True
         Text = ("Git")

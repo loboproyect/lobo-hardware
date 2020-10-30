@@ -2,6 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPU-Info 3.15.90\n"
+"POT-Creation-Date: 2020-10-29 03:55 UTC\n"
 "PO-Revision-Date: 2020-10-25 16:33 UTC\n"
 "Last-Translator: herberth <herberth@herberth-inspiron1501>\n"
 "Language: es\n"
@@ -9,181 +10,190 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .project:1 FAbout.form:50
+#: .project:1 FAbout.form:51
 msgid "CPU-Info"
 msgstr ""
 
-#: .project:2 FAbout.form:151
+#: .project:2 FAbout.form:152
 msgid "CPU-Info is an application that gathers information for hardware components available on your system."
 msgstr "CPU-Info es una aplicación que recopila información sobre los componentes de hardware disponibles en su sistema."
 
-#: FAbout.class:45
+#: FAbout.class:46
 msgid "Version App"
 msgstr "Versión"
 
-#: FAbout.class:46
+#: FAbout.class:47
 msgid "Developed"
 msgstr "Desarrollado"
 
-#: FAbout.class:47
+#: FAbout.class:48
 msgid "Version Gambas"
 msgstr "Versión de Gambas"
 
-#: FAbout.class:48
+#: FAbout.class:49
 msgid "Component"
 msgstr "Componente"
 
-#: FAbout.class:49
+#: FAbout.class:50
 msgid "Build"
 msgstr "Compilación"
 
-#: FAbout.class:50 MCtl.module:952
+#: FAbout.class:51 MCtl.module:952
 msgid "Language"
 msgstr "Idioma"
 
-#: FAbout.class:51 MCtl.module:985
+#: FAbout.class:52 MCtl.module:985
 msgid "Theme"
 msgstr "Apariencia"
 
-#: FAbout.class:118
+#: FAbout.class:124
 msgid "Name"
 msgstr "Nombre"
 
-#: FAbout.class:119
+#: FAbout.class:125
 msgid "Country"
 msgstr "Pais"
 
-#: FAbout.class:120
+#: FAbout.class:126
 msgid "Email"
 msgstr "Correo"
 
-#: FAbout.class:121 MCtl.module:510
+#: FAbout.class:127 MCtl.module:510
 msgid "Type"
 msgstr "Tipo"
 
-#: FAbout.class:134
+#: FAbout.class:187
 msgid "Main Developer and Project Management"
 msgstr "Desarrollador Principal y Gestor del Proyectos"
 
-#: FAbout.class:137
+#: FAbout.class:190
 msgid "France"
 msgstr "Francia"
 
-#: FAbout.class:140
+#: FAbout.class:193
 msgid "Main Developer Gambas Basic"
 msgstr "Desarrollador Principal Gambas Basic"
 
-#: FAbout.class:147 MCtl.module:510
+#: FAbout.class:200 MCtl.module:510
 msgid "Class"
 msgstr "Clase"
 
-#: FAbout.class:154
+#: FAbout.class:207
 msgid "Initial Design Improvements"
 msgstr "Mejoras de Diseño Inicial"
 
-#: FAbout.class:160
+#: FAbout.class:213
 msgid "Form Authenticate"
 msgstr "Formulario de Autenticación"
 
-#: FAbout.class:163
+#: FAbout.class:216
 msgid "Spain"
 msgstr "España"
 
-#: FAbout.class:165
+#: FAbout.class:218
 msgid "Design Update"
 msgstr "Diseño de actualización"
 
-#: FAbout.class:168
+#: FAbout.class:221
 msgid "Polonia"
 msgstr "Polonia"
 
-#: FAbout.class:170
+#: FAbout.class:223
 msgid "I-Nex"
 msgstr ""
 
-#: FAbout.class:177
-msgid "Version "
-msgstr "Versión "
+#: FAbout.class:230 FCheck.class:55 MCtl.module:1018
+msgid "Version"
+msgstr "Versión"
 
-#: FAbout.class:178
-msgid "CPU-Info "
-msgstr ""
-
-#: FAbout.class:258
+#: FAbout.class:311
 msgid "Checking version"
 msgstr "Comprobando versión"
 
-#: FAbout.class:270
+#: FAbout.class:323
 msgid "No updates"
 msgstr "No hay actualizaciones"
 
-#: FAbout.class:276 FAuthenticate.form:118
+#: FAbout.class:330 FAuthenticate.form:118
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: FAbout.class:276
+#: FAbout.class:330
 msgid "Ok"
 msgstr "Aceptar"
 
-#: FAbout.class:276
+#: FAbout.class:330
 msgid "There is a new version, do you want to update?"
 msgstr "Hay una nueva versión, ¿quieres actualizar?"
 
-#: FAbout.class:279
+#: FAbout.class:333
 msgid "Download Canceled"
 msgstr "Descarga Cancelada"
 
-#: FAbout.class:288
+#: FAbout.class:342
 msgid "Downloading new version"
 msgstr "Descargando nueva versión"
 
-#: FAbout.form:40
+#: FAbout.form:41
 msgid "About CPU-Info"
 msgstr "Acerca de CPU-Info"
 
-#: FAbout.form:77
+#: FAbout.form:78
 msgid "Home"
 msgstr "Home"
 
-#: FAbout.form:89
+#: FAbout.form:90
 msgid "License"
 msgstr "Licencia"
 
-#: FAbout.form:101
+#: FAbout.form:102
 msgid "Update"
 msgstr "Actualizar"
 
-#: FAbout.form:113
+#: FAbout.form:114
 msgid "Thanks"
 msgstr "Gracias"
 
-#: FAbout.form:142
+#: FAbout.form:143
 msgid "Copyright © 2020-2020"
 msgstr "Derechos de Autor © 2020-2020"
 
-#: FAbout.form:168
-msgid "    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>."
+#: FAbout.form:169
+msgid ""
+"    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n"
+"\n"
+"    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr "Este programa es software libre: puede redistribuirlo y / o modificarlo según los términos de la Licencia Pública General GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior.  n  n Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; incluso sin la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia pública general GNU para obtener más detalles.  N  n Debería haber recibido una copia de la Licencia pública general GNU junto con este programa. De lo contrario, consulte <http://www.gnu.org/licenses/>."
 
-#: FAbout.form:184
+#: FAbout.form:185
 msgid "Check Update"
 msgstr "Ver actualizaciones"
 
-#: FAbout.form:199
+#: FAbout.form:200
 msgid "Website"
 msgstr "Sitio Web"
 
-#: FAbout.form:206
+#: FAbout.form:207
 msgid "Mail"
 msgstr "Correo"
 
-#: FAbout.form:278 FCheck.form:102 FSystem.form:62 FSystemBasic.form:63
+#: FAbout.form:214
+msgid "Git"
+msgstr ""
+
+#: FAbout.form:286 FCheck.form:102 FSystem.form:62 FSystemBasic.form:63
 msgid "Close"
 msgstr "Cerrar"
 
 #: FAuthenticate.class:51
-msgid "Authentication is required to run this program\n'"
-msgstr "Se requiere autenticación para ejecutar este programa\n'"
+msgid ""
+"Authentication is required to run this program\n"
+"'"
+msgstr ""
+"Se requiere autenticación para ejecutar este programa\n"
+"'"
 
 #: FAuthenticate.class:77
 msgid "root"
@@ -198,8 +208,12 @@ msgid "Authenticate"
 msgstr "Autenticar"
 
 #: FAuthenticate.form:68
-msgid "An application is attempting to perform an action that requires privileges.\nAuthentication is required to run this action."
-msgstr "Una aplicación está intentando realizar una acción que requiere privilegios.\nSe requiere autenticación para ejecutar esta acción."
+msgid ""
+"An application is attempting to perform an action that requires privileges.\n"
+"Authentication is required to run this action."
+msgstr ""
+"Una aplicación está intentando realizar una acción que requiere privilegios.\n"
+"Se requiere autenticación para ejecutar esta acción."
 
 #: FAuthenticate.form:78
 msgid "Password:  "
@@ -212,10 +226,6 @@ msgstr "Su intento de autenticación no tuvo éxito. Inténtalo de nuevo."
 #: FCheck.class:54
 msgid "Libreria"
 msgstr "Librery"
-
-#: FCheck.class:55 MCtl.module:1018
-msgid "Version"
-msgstr "Versión"
 
 #: FCheck.class:56
 msgid "Installed"
@@ -513,3 +523,9 @@ msgstr ""
 msgid "&1 T"
 msgstr ""
 
+#: MMSG.module:28
+msgid "Current extensions is active, can not be deleted."
+msgstr ""
+
+#~ msgid "Version "
+#~ msgstr "Versión "
