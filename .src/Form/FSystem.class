@@ -78,7 +78,7 @@ Public Sub mnuBasic_Click()
   Settings_Theme.Save
   Settings_Theme.Reload
   Me.Close
-  FSystemBasic.Show
+  FSystemMini.Show
   
 End
 

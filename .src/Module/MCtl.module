@@ -101,6 +101,13 @@ Public Sub Init_Form_Sys()
     .H = 12
   End With
   
+  ''Create panel space preview logo
+  $hPanelSpc = New Panel($hPnlContainer) As "pn3"
+  With $hPanelSpc
+    .Arrangement = Arrange.Vertical
+    .H = 12
+  End With
+  
   ''Create picture logo processor
   $hPicture = New PictureBox($hPnlContainer) As "hPicLogo"
   With $hPicture
@@ -110,7 +117,7 @@ Public Sub Init_Form_Sys()
   End With
   
   ''Create panel space logo/title
-  $hPanelSpc = New Panel($hPnlContainer) As "pn3"
+  $hPanelSpc = New Panel($hPnlContainer) As "pn4"
   With $hPanelSpc
     .Arrangement = Arrange.Vertical
     .H = 12
@@ -131,7 +138,7 @@ Public Sub Init_Form_Sys()
   End With
   
   ''Create panel space after text proce
-  $hPanelSpc = New Panel($hPnlContainer) As "pn4"
+  $hPanelSpc = New Panel($hPnlContainer) As "pn5"
   With $hPanelSpc
     .Arrangement = Arrange.Vertical
     .H = 12
@@ -140,7 +147,7 @@ Public Sub Init_Form_Sys()
   End With
   
   ''Create panel infosys
-  $hPnlContainer = New Panel(FSystem) As "pn5"
+  $hPnlContainer = New Panel(FSystem) As "pn6"
   With $hPnlContainer
     .Arrangement = Arrange.Horizontal
     .Expand = True

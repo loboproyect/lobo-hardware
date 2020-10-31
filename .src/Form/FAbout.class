@@ -247,7 +247,6 @@ Public Sub Update()
   Dim sProgram As String 
   Dim sVersion As String 
   Dim sURL As String
-  Dim sUpdateVersion As String
   Dim sRes As String
   
   ''Show update app

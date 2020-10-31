@@ -29,6 +29,8 @@ Cn As New Connection
 
 Public Procedure Connect() As Connection
   
+  ''Connection DB  
+  
   Cn = New Connection
   Cn.Type = "sqlite3" 
   Cn.Host = (Application.Path &/ "DB")
@@ -57,7 +59,8 @@ Public Sub Main()
 End
 
 Public Sub Close(Cn As Connection)
-  
+  ''Close connection
+
   Cn.Close
   Cn = Null
   

@@ -173,7 +173,7 @@ End
 Public Sub Form_Open()
   
   Application.Animations = True
-  With FSystemBasic
+  With FSystemMini
     .w = W
     .H = H
     .Text = Application.Name

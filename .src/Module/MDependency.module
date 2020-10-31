@@ -28,11 +28,15 @@
 iList As New String[] 
 sNewList As New String[]
 
+'' Dir
 bDir As String = "/usr/bin/"
 sbDir As String = "/usr/sbin/"
 libDir As String = "/usr/lib/"
 
+''Lib check
 iListApps As String[] = ["x86_64-linux-gnu/libcpuinfo.so.0", "cpuid_tool", "libtoolize", "wmctrl", "hwinfo", "glxinfo", "lshw", "lsscsi"]
+
+''Lib install
 iListAppInstall As String[] = ["libcpuinfo0", "cpuidtool", "libtool", "wmctrl", "hwinfo", "mesa-utils", "lshw", "lsscsi"]
 iDir As String[] = [libDir, bDir, bDir, bDir, sbDir, bDir, bDir, bDir]
 
@@ -41,18 +45,18 @@ sDir As String = Desktop.ConfigDir &/ "CPU-Info"
 iResult As Integer
 
 Public Sub Load()
+  
   ''Load config and show form
   
   If Exist(sDir) And Exist(sDir &/ "CPU-Info.conf") Then
     Try iResult = Settings_Theme["Theme/iFull", FSystem]
     If iResult = 1 Then
-      
       MCtl.Init_Form_Sys
       Inc Application.Busy
       MCtl.FillList
       Dec Application.Busy
     Else
-      FSystemBasic.Show
+      FSystemMini.Show
     Endif
     
   Else
@@ -72,7 +76,7 @@ Public Sub Load()
       MCtl.FillList
       Dec Application.Busy
     Else
-      FSystemBasic.Show
+      FSystemMini.Show
     Endif
     
   Endif

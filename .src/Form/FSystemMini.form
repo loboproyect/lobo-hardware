@@ -8,26 +8,13 @@
   { mnuMain Menu
     Text = ("Main")
     Visible = False
-    { mnuThemes Menu
-      Text = ("Themes")
-      Visible = False
-      { mnuThemeWhite Menu
-        Text = ("White")
-      }
-      { mnuThemeDark Menu
-        Text = ("Dark")
-      }
-      { mnuThemeKids Menu
-        Text = ("Kids")
-      }
-    }
     { mnuStyle Menu
       Text = ("Style")
       { mnuFull Menu
         Text = ("Full")
       }
       { mnuBasic Menu
-        Text = ("Basic")
+        Text = ("Mini")
       }
     }
     { mnuAbout Menu
