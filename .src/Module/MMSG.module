@@ -25,4 +25,10 @@
 '' NOTA
 '' Check paths and libraries according to your Linux version.
 
+''Messages Publics
+
 Public Const MSG_CN_DB As String = ("Error DB connection.")
+Public Const MSG_CK_DEPENDENCY As String = ("All dependencies are installed, there is nothing to install...")   
+Public Const MSG_NOT_UPDATE As String = ("No updates")
+Public Const MSG_NW_VERSION_UPDATE As String = ("There is a new version, do you want to update?")
+Public Const MSG_RD_DISK As String = ("Can't from read the source file or disk...") 

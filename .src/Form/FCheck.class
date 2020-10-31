@@ -125,7 +125,7 @@ Public Sub Install_Lib()
   If sNewList.Count = 0 Then
     
     Message.Title = (Application.Name)
-    Message.Info(("All dependencies are installed, there is nothing to install..."))
+    Message.Info((MMSG.MSG_CK_DEPENDENCY))
     Return
     
   Else

@@ -43,7 +43,6 @@ FONT_COLOR As Integer
 $MX As Integer
 $MY As Integer
 
-'$FSystem As Form
 $hPanel As Panel
 $hPanelSpc As Panel
 $hPnlGaugeRam As Panel
@@ -701,7 +700,7 @@ Public Sub $hGView_Sort() ''CODE GAMBAS
   
 Catch
   Message.Title = (Application.Name)
-  Message.Error(("Can't from read the source file or disk...") & "\n\n" & Error.Text)
+  Message.Error((MMSG.MSG_RD_DISK) & "\n\n" & Error.Text)
   
 End
 
@@ -817,18 +816,6 @@ Public Sub GetInfoCircleHD_Ultimo()
   
   Dim iSize As Integer = 75
   
-  'Dim iUsado As Integer
-  'Dim sUsado As String
-  
-  ' Dim iDisponible As Integer
-  ' Dim sDisponible As String
-  
-  ' Dim iTotal1 As Integer
-  ' Dim sTotal1 As String
-  
-  'sUsed = Left$(sUsed, -1)
-  'iFree = sUsed - Val(sUsed)
-  
   Shell "df -lh --total /dev/" & MInfo.sSDx & "*" & " | grep 'total' | awk {'print $2'}" To sTotal
   sTotal = Trim(sTotal)
   sTotal = Left$(sTotal, -1)
@@ -894,7 +881,6 @@ Public Sub GetInfoCircleHD_Ultimo()
     .Foreground = FONT_COLOR
     .Alignment = Align.Center
     .Font.Size = 8
-    '    .traslate = True
   End With
   
   $hCirG = New CircleGauge($hPnlGaugeHD) As "hCirG"

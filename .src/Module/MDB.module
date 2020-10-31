@@ -31,7 +31,7 @@ Public Procedure Connect() As Connection
   
   Cn = New Connection
   Cn.Type = "sqlite3" 
-  Cn.Host = (Application.Path)
+  Cn.Host = (Application.Path &/ "DB")
   Cn.Name = "sys.db"
   Try Cn.Open()
   Return Cn

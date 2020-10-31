@@ -35,6 +35,7 @@ sDir_Download As String = Desktop.GetDirectory("DOWNLOAD") & "/"
 sDir_Config As String 
 Cn As New Connection
 Rs As Result
+sQry As String
 
 Public Sub Init_Grid_System()
   
@@ -42,13 +43,22 @@ Public Sub Init_Grid_System()
   Dim aTextSys As String[] = []
   Dim i As Integer
   Dim aLine As String[]
+  Dim sBuild As String = Format$(Now, "ddmm" & "." & "yy")
+  
+  ''Query and update build
+  
+  sQry = "UPDATE tbBuild SET Code = '" & sBuild & "' WHERE id = " & "1"
+  Rs = Cn.Exec(sQry)
+  Rs = Cn.Exec("SELECT * FROM tbBuild where id LIKE '1'")
+  
+  ''Show information basic
   
   aTextSys.Add("[CPU-Info]")
   aTextSys.Add(("Version App") & "=" & Application.Version)
   aTextSys.Add(("Developed") & "=" & "Gambas Basic")
   aTextSys.Add(("Version Gambas") & "=" & System.FullVersion)
   aTextSys.Add(("Component") & "=" & (sTextLib)) 
-  aTextSys.Add(("Build") & "=" & "1410.20") '"20201009")
+  aTextSys.Add(("Build") & "=" & Rs!Code) 
   aTextSys.Add(("Language") & "=" & System.Language)
   aTextSys.Add(("Theme") & "=" & Style.Name)
   
@@ -102,8 +112,8 @@ Public Sub Init_Grid_Thanks()
   
   Dim i As Integer
   
-  Cn = MDB.Connect()
-  'Rs = cN.Exec("select * from tbThanks ORDER BY Name ASC")
+  ''Show list thanks
+  
   Rs = cN.Exec("select * from tbThanks")
   
   With GridThanks
@@ -158,6 +168,8 @@ Public Sub Init_Grid_Thanks()
 End
 
 Public Sub Form_Open()
+  
+  Cn = MDB.Connect()
   
   lblversion.Text = ("Version") & Space(1) & Application.Version
   lbltitle.Text = (Application.Name)
@@ -238,6 +250,8 @@ Public Sub Update()
   Dim sUpdateVersion As String
   Dim sRes As String
   
+  ''Show update app
+  
   sDir_Config = Desktop.ConfigDir &/ "CPU-Info" 
   lblStatus.Visible = True
   lblStatus.Text = ("Checking version")
@@ -252,14 +266,14 @@ Public Sub Update()
   If sVersion = Application.Version Then
     
     Message.Title = (Application.Name)
-    Message.Info(("No updates"))
+    Message.Info((MMSG.MSG_NOT_UPDATE))
     lblStatus.Text = Null
     
   Else
     
     If sVersion > Application.Version Then
       Message.Title = (Application.Name)    
-      sRes = Message.Question(("There is a new version, do you want to update?"), ("Ok"), ("Cancel"))
+      sRes = Message.Question((MMSG.MSG_NW_VERSION_UPDATE), ("Ok"), ("Cancel"))
       If sRes = 2 Then
         
         lblStatus.Text = ("Download Canceled")
@@ -278,7 +292,7 @@ Public Sub Update()
         lblStatus.Text = ("Download completed successfully " & sDir_Config)
         
         Shell "rm -r " & sDir_Config &/ "CPU-Update.conf.*"
-        'Shell "rm -r " & sPath &/ "*.gambas.*"
+        Shell "rm -r " & sDir_Download &/ "*.gambas.*"
         Wait 1
         
         '        lblStatus.Visible = False
@@ -291,6 +305,8 @@ Public Sub Update()
 End
 
 Public Sub LibCom()
+  
+  ''Show used lib  
   
   If Component.IsLoaded("gb.qt4") Then
     aDir = RDir("/usr/lib/", "*libQtCore.so.*.*.*")
