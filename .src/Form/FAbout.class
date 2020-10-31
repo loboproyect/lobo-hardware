@@ -267,7 +267,9 @@ Public Sub Update()
     Message.Title = (Application.Name)
     Message.Info((MMSG.MSG_NOT_UPDATE))
     lblStatus.Text = Null
-    
+    Shell "rm -r " & sDir_Config &/ "Update.conf.*"
+    Shell "rm -r " & sDir_Download &/ "*.gambas.*"
+    Wait 1
   Else
     
     If sVersion > Application.Version Then
@@ -290,13 +292,14 @@ Public Sub Update()
         Wait 2
         lblStatus.Text = ("Download completed successfully " & sDir_Config)
         
-        Shell "rm -r " & sDir_Config &/ "CPU-Update.conf.*"
+        Shell "rm -r " & sDir_Config &/ "Update.conf.*"
         Shell "rm -r " & sDir_Download &/ "*.gambas.*"
         Wait 1
         
         '        lblStatus.Visible = False
         
       Endif
+      
     Endif
     
   Endif
@@ -342,52 +345,6 @@ Public Sub LibCom()
   
 End
 
-Public Sub LibComEli()
-  
-  Dim aSearchPath As New String[]
-  Dim cSearch As Collection
-  Dim cFile As Collection
-  Dim sDir As String
-  Dim sFile As String
-  Dim sPattern As String
-  Dim aLib As New String[]
-  
-  Dim aText As New String[]
-  ' Dim sList As String
-  Dim sVar As String
-  
-  sVar = Env["LIBPATH"]
-  If sVar Then 
-    aSearchPath = Split(sVar, ":")
-  Else
-    aSearchPath = ["/usr/lib"]
-  Endif
-  
-  cSearch = ["QT4": "libQtCore.so.*.*.*", "QT5": "libQt5Core.so.*.*.*", "GTK+2": "libgtk-x11-2*.so.*.*.*", "GTK+3": "libgtk-3*.so.*.*.*"]
-  
-  cFile = New Collection
-  aText.Add("")
-  asListlib.clear
-  For Each sDir In aSearchPath
-    For Each sFile In RDir(sDir, "", gb.File, False)
-      sFile = File.Name(sFile)
-      For Each sPattern In cSearch
-        If sFile Like sPattern And If Not cFile.Exist(sFile) Then
-          aLib.Add(cSearch.Key & "=" & sFile)
-          asListlib.Add(cSearch.Key & "=" & sFile)
-          Break
-        Endif
-      Next
-    Next
-  Next
-  asListlib.Sort()
-  
-  aText.Insert(aLib.Sort())
-  sList = aText.Join(gb.NewLine)
-  sList = Trim(sList)
-  
-End
-
 Public Sub tlbUpdate_Click()
   
   Update
@@ -409,5 +366,9 @@ End
 Public Sub btnEmail_Click()
   
   ' Desktop.SendMail
+  
+End
+
+Public Sub lblTitle_MouseDown()
   
 End
