@@ -2,7 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPU-Info 3.15.90\n"
-"PO-Revision-Date: 2020-10-31 17:01 UTC\n"
+"POT-Creation-Date: 2020-11-01 03:57 UTC\n"
+"PO-Revision-Date: 2020-10-31 23:58 UTC\n"
 "Last-Translator: herberth <herberth@herberth-inspiron1501>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -13,9 +14,15 @@ msgstr ""
 msgid "CPU-Info"
 msgstr ""
 
-#: .project:2 FAbout.form:152
-msgid "CPU-Info is an application that gathers information for hardware components available on your system."
-msgstr "CPU-Info es una aplicación que recopila información sobre los componentes de hardware disponibles en su sistema."
+#: .project:2
+msgid ""
+"CPU-Info is an application that gathers information for hardware components available on your system.\n"
+"\n"
+"CPU, GPU, Motherboard, Sound, Hard disks, RAM, Network, Distribution and version, Desktop, Xorg, GCC, GLX, Linux Kernel info."
+msgstr ""
+"CPU-Info es una aplicación que recopila información de los componentes de hardware disponibles en su sistema. \n"
+"\n"
+"CPU, GPU, Placa Base, Sonido, Disco Duro, RAM, Red, Distribución y Versión, Escritorio, Xorg, GCC, GLX, información del kernel de Linux."
 
 #: FAbout.class:57
 msgid "Version App"
@@ -109,8 +116,17 @@ msgstr "Gracias"
 msgid "Copyright © 2020-2020"
 msgstr "Derechos de Autor © 2020-2020"
 
+#: FAbout.form:152
+msgid "CPU-Info is an application that gathers information for hardware components available on your system."
+msgstr "CPU-Info es una aplicación que recopila información sobre los componentes de hardware disponibles en su sistema."
+
 #: FAbout.form:169
-msgid "    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\n    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgid ""
+"    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n"
+"\n"
+"    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"    You should have received a copy of the GNU General Public License    along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr "Este programa es software libre: puede redistribuirlo y / o modificarlo según los términos de la Licencia Pública General GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a su elección) cualquier versión posterior.  n  n Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; incluso sin la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulte la Licencia pública general GNU para obtener más detalles.  N  n Debería haber recibido una copia de la Licencia pública general GNU junto con este programa. De lo contrario, consulte <http://www.gnu.org/licenses/>."
 
 #: FAbout.form:185
@@ -129,13 +145,18 @@ msgstr "Correo"
 msgid "Git"
 msgstr "Git"
 
-#: FAbout.form:286 FCheck.form:102 FSystem.form:41 FSystemMini.form:42
+#: FAbout.form:286 FCheck.form:102 FMail.form:100 FSystem.form:41
+#: FSystemMini.form:42
 msgid "Close"
 msgstr "Cerrar"
 
 #: FAuthenticate.class:51
-msgid "Authentication is required to run this program\n'"
-msgstr "Se requiere autenticación para ejecutar este programa\n'"
+msgid ""
+"Authentication is required to run this program\n"
+"'"
+msgstr ""
+"Se requiere autenticación para ejecutar este programa\n"
+"'"
 
 #: FAuthenticate.class:77
 msgid "root"
@@ -150,8 +171,12 @@ msgid "Authenticate"
 msgstr "Autenticar"
 
 #: FAuthenticate.form:68
-msgid "An application is attempting to perform an action that requires privileges.\nAuthentication is required to run this action."
-msgstr "Una aplicación está intentando realizar una acción que requiere privilegios.\nSe requiere autenticación para ejecutar esta acción."
+msgid ""
+"An application is attempting to perform an action that requires privileges.\n"
+"Authentication is required to run this action."
+msgstr ""
+"Una aplicación está intentando realizar una acción que requiere privilegios.\n"
+"Se requiere autenticación para ejecutar esta acción."
 
 #: FAuthenticate.form:78
 msgid "Password:  "
@@ -188,6 +213,30 @@ msgstr "Instalar"
 #: FCheck.form:101
 msgid "Close Windows"
 msgstr "Cerrar Ventana"
+
+#: FMail.class:39
+msgid "Body"
+msgstr "Mensaje"
+
+#: FMail.form:21
+msgid "Email CPU-Info"
+msgstr "Correo CPU-Info"
+
+#: FMail.form:31
+msgid "Send mail to CPU-Info team\n"
+msgstr "Enviar correo al equipo de CPU-Info\n"
+
+#: FMail.form:42
+msgid "To:"
+msgstr "Para:"
+
+#: FMail.form:61
+msgid "Subject:"
+msgstr "Asunto:"
+
+#: FMail.form:86
+msgid "Send Mail"
+msgstr "Enviar Correo"
 
 #: FSystem.form:18 FSystemMini.form:19
 msgid "Main"
@@ -461,3 +510,6 @@ msgstr "Hay una nueva versión, ¿quieres actualizar?"
 msgid "Can't from read the source file or disk..."
 msgstr "No se puede leer el archivo o el disco de origen..."
 
+#: MMSG.module:35
+msgid "You cannot leave empty fields."
+msgstr "No puedes dejar campos vacíos."

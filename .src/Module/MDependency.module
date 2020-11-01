@@ -1,10 +1,10 @@
 ' Gambas module file
 
-' This aplication is a part of Louve Project 
+' This aplication is a part of Lobo Desktop 
 
 ' CPU-Info is an application that gathers information for hardware components available on your system.
 
-' Copyright 2020(C) Louve Project Team <louveproject@gmail.com>
+' Copyright 2020(C) Lobo Desktop Team <lobodesktop@gmail.com>
 
 ' Authors:
 '   Herberth Guzmán <herberthguzman@gmail.com>

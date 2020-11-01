@@ -1,0 +1,78 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,60.7143)
+  Background = &H2C3E50&
+  Foreground = &HBBD2D2&
+  Text = ("Email CPU-Info")
+  Icon = Picture["icon:/small/mail"]
+  Resizable = False
+  Arrangement = Arrange.Vertical
+  Spacing = True
+  Margin = True
+  { lblTitle Label
+    MoveScaled(4,0,43,6)
+    Font = Font["+2"]
+    Text = ("Send mail to CPU-Info team\n")
+    Alignment = Align.Center
+  }
+  { HBTo HBox
+    MoveScaled(1,13,48,4)
+    Spacing = True
+    Indent = True
+    { lblTO Label
+      MoveScaled(0,0,10,4)
+      Text = ("To:")
+    }
+    { txtTo TextBox
+      MoveScaled(18,0,24,4)
+      Foreground = &H3F3FFF&
+      Expand = True
+      Alignment = Align.Right
+      ReadOnly = True
+    }
+  }
+  { HBSub HBox
+    MoveScaled(1,18,48,4)
+    Spacing = True
+    Indent = True
+    { lblSub Label
+      MoveScaled(0,0,10,4)
+      Text = ("Subject:")
+    }
+    { txtSubject TextBox
+      MoveScaled(18,0,24,4)
+      Expand = True
+      Alignment = Align.Right
+    }
+  }
+  { txtMSG TextArea
+    MoveScaled(1,24,48,25)
+    Expand = True
+    Wrap = True
+    ScrollBar = Scroll.Vertical
+  }
+  { HBSend HBox
+    MoveScaled(1,55,48,4)
+    Spacing = True
+    { btnSend Button
+      MoveScaled(0,0,17,4)
+      Mouse = Mouse.Pointing
+      AutoResize = True
+      Text = Shortcut(("Send Mail"), "S")
+      Picture = Picture["icon:/small/mail"]
+    }
+    { Panel24 Panel
+      MoveScaled(19,0,7.1429,4)
+      Expand = True
+      Arrangement = Arrange.Vertical
+    }
+    { btnClose Button
+      MoveScaled(29,0,17,4)
+      Mouse = Mouse.Pointing
+      AutoResize = True
+      Text = Shortcut(("Close"), "C")
+      Picture = Picture["icon:/small/close"]
+    }
+  }
+}
