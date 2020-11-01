@@ -1,4 +1,4 @@
-' Gambas module file
+' Gambas class file
 
 ' This aplication is a part of Lobo Desktop 
 
@@ -25,44 +25,56 @@
 '' NOTA
 '' Check paths and libraries according to your Linux version.
 
-Cn As New Connection 
+sEmail As String = "lobodesktop@gmail.com"
 
-Public Procedure Connect() As Connection
+Public Sub lblSub_MouseDown()
   
-  ''Connection DB  
+End
+
+Public Sub Form_Open()
   
-  Cn = New Connection
-  Cn.Type = "sqlite3" 
-  Cn.Host = (Application.Path &/ "DB")
-  Cn.Name = "sys.db"
-  Try Cn.Open()
-  Return Cn
+  txtto.Text = sEmail
+  txtSubject.Text = Application.Title & Space(1) & "error"
+  txtSubject.SetFocus
+  txtmsg.Text = ("Body")
   
-  If Error Then
-    Message.Title = (Application.Name)
-    Message.Error(MMSG.MSG_CN_DB)
-    Cn = Null
-    Return True 
-  End If
+End
+
+Public Sub btnSend_Click()
   
-  Return False 
+  Dim $To As New String[]
+  Dim sSub As String = txtSubject.Text
+  Dim sMSG As String = txtmsg.Text
+  
+  $To.Add(sEmail)
+  
+  If IsNull(sSub) Or IsNull(sMSG)
+    Message.Title(Application.Title)
+    Message.Info(MMSG.MSG_EMPTY_FIELDS) 
+  Else
+    Desktop.SendMail($To,,, sSub, sMSG, Null) 
+  Endif
   
 Catch
-  'Debug "ERROR [ " & DConv(Error.Text) & " ]" 
+  'LoboLog.Add(Now, subLog.ERROR_GRAVE, Error.Text, Error.Where, Error.Code)
   Message.Error(Error.Text & gb.NewLine & Error.Where)
   
 End
 
-Public Sub Main()
+Public Sub btnClose_Click()
   
-  Connect() 
+  Me.Close
   
 End
 
-Public Sub Close(Cn As Connection)
-  ''Close connection
+Public Sub Form_KeyPress()
   
-  Cn.Close
-  Cn = Null
+  If Key.Code = Key.Esc Then
+    Me.Close
+  Endif
+  
+End
+
+Public Sub txtMSG_KeyPress()
   
 End
